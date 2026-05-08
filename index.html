@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Knockoff Wordle</title>
+    <link rel="icon" type="image/webp" href="https://www.internetmatters.org/wp-content/uploads/2022/02/wordle-logo.webp">
+    <style>
+        html, body {
+            height: 100%;
+            overflow-x: hidden;
+        }
+        body {
+            font-family: Helvetica, serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.5;
+            overflow-x: hidden;
+            background-size: cover;
+            background-repeat: no-repeat;
+            min-height: 100dvh
+        }
+
+        section {
+            padding: clamp(1rem, 4vw, 2rem);
+        }
+
+        h1 {
+            font-size: clamp(1.8rem, 5vw, 3rem);
+            text-align: center;
+        }
+
+        a {
+            color: #007BFF;
+            text-decoration: none;
+        }
+        button {
+            display: block;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            border-radius: 20px;
+            border: 3px solid #ccc;
+            font-size: clamp(1rem, 3vw, 1.2rem);
+        }
+
+        .corner-link {
+            position: fixed;
+            bottom: 1rem;
+            right: 1rem;
+            background: #fff;
+            padding: 0.3rem 0.6rem;
+            border-radius: 5px;
+            font-size: 0.8rem;
+        }
+.pulse {
+            animation: pulse 0.2s ease;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+            100% { transform: scale(1); }
+        }
+        @media (max-width: 600px) {
+            h2 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <section id="project">
+        <h1>Wordle</h1>
+
+        <input id="let1" type="text" class = "in1" maxLength = "1"/>
+        <input id="let2" type="text" class = "in2" maxLength = "1"/>
+        <input id="let3" type="text" class = "in3" maxLength = "1"/>
+        <input id="let4" type="text" class = "in4" maxLength = "1"/>
+        <input id="let5" type="text" class = "in5" maxLength = "1"/>
+        <input id="let6" type="text" class = "in6" maxLength = "1"/>
+        <button id ="submit">Submit</button>
+        
+    </section>
+
+    <script>    </script>
+</body>
+</html>
