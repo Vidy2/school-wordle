@@ -19,7 +19,7 @@ jobs:
       - name: Fetch Wordle
         run: |
 
-          DATE=$(date +%F)
+          DATE=$(TZ=America/Los_Angeles date +%F)
 
           RESPONSE=$(curl -s "https://www.nytimes.com/svc/wordle/v2/$DATE.json")
 
