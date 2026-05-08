@@ -122,6 +122,30 @@
         const status = document.getElementById("status");
         const board = document.getElementById("board");
         const submit = document.getElementById("submit");
+        function setUpInput(input){
+            input.addEventListener("input", () => {
+                input.value = input.value.toLowerCase();
+
+                if (input.value.length === 1){
+                    const next = input.nextElementSibling;
+
+                    if (next){
+                        next.focus();
+                    }
+                }
+            });
+
+            input.addEventListener("keydown", (e) => {
+                if (e.key === "Backspace" && input.value === ""){
+                    const previous = input.previousElementSibling;
+
+                    if (previous){
+                        previous.focus();
+                    }
+                }
+            });
+        }
+        document.querySelectorAll("input").forEach(setUpInput);
         submit.addEventListener("click",() =>{
         submit.classList.add("pulse");
         setTimeout(() => {
@@ -154,6 +178,7 @@
             for (let i = 0; i < 5; i++){
                 const input = document.createElement("input");
                 input.maxLength = 1;
+                setUpInput(input);
                 nRow.appendChild(input);
             }
             board.appendChild(nRow);
