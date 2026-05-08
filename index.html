@@ -42,7 +42,18 @@
             border: 3px solid #ccc;
             font-size: clamp(1rem, 3vw, 1.2rem);
         }
-
+        input{
+            text-transform: uppercase;
+            width: 3rem;
+            height: 3rem;
+            text-align: center;
+            font-size: 2rem;
+        }
+        #status {
+            font-size: clamp(1rem, 3vw, 1.5rem);
+            color: darkgreen;
+            margin-top: 1rem;
+        }
         .corner-link {
             position: fixed;
             bottom: 1rem;
@@ -52,10 +63,12 @@
             border-radius: 5px;
             font-size: 0.8rem;
         }
-.pulse {
+        .pulse {
             animation: pulse 0.2s ease;
         }
-
+        .row {
+            margin-bottom: 0.2rem;
+        }
         @keyframes pulse {
             0% { transform: scale(1); }
             50% { transform: scale(1.08); }
@@ -73,25 +86,60 @@
 
     <section id="project">
         <h1>Wordle</h1>
-
-        <input id="let1" type="text" class = "in1" maxLength = "1"/>
-        <input id="let2" type="text" class = "in2" maxLength = "1"/>
-        <input id="let3" type="text" class = "in3" maxLength = "1"/>
-        <input id="let4" type="text" class = "in4" maxLength = "1"/>
-        <input id="let5" type="text" class = "in5" maxLength = "1"/>
-        <input id="let6" type="text" class = "in6" maxLength = "1"/>
+        <div id = "board">
+            <div id = "row">
+                <input maxlength="1">
+                <input maxlength="1">
+                <input maxlength="1">
+                <input maxlength="1">
+                <input maxlength="1">
+            </div>
+        </div>
+        <p id ="status"></p>
         <button id ="submit">Submit</button>
         
     </section>
 
     <script>
+        let word = "";
         async function loadWordle(){
             const response = await fetch("./wordle.json");
-            const data = await response.json;
-            const word = data.answer;
+            const data = await response.json();
+            word = data.answer;
+            word = word.toLowerCase();
             console.log(word);
         }
         loadWordle();
+        const status = document.getElementById("status");
+        const board = document.getElementById("board");
+        const submit = document.getElementById("submit");
+        submit.addEventListener("click",() =>{
+        submit.classList.add("pulse");
+        setTimeout(() => {
+            submit.classList.remove("pulse");
+        }, 200);
+            const cuRow = board.lastElementChild;
+            const res = cuRow.querySelectorAll("input");
+            let guess = "";
+            res.forEach(input =>{
+                guess += input.value;
+                input.readOnly = true;
+            });
+            guess = guess.toLowerCase();
+            if (guess === word){
+                status.textContent = "You win!";
+                return;
+            }
+            const nRow = document.createElement("div");
+            nRow.className = "row";
+            for (let i = 0; i < 5; i++){
+                const input = document.createElement("input");
+                input.maxLength = 1;
+                nRow.appendChild(input);
+            }
+            board.appendChild(nRow);
+        });
+
     </script>
 </body>
 </html>
