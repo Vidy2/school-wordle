@@ -84,6 +84,14 @@
         
     </section>
 
-    <script>    </script>
+    <script>
+        async function loadWordle(){
+            const response = await fetch("./wordle.json");
+            const data = await response.json;
+            const word = data.answer;
+            console.log(word);
+        }
+        loadWordle();
+    </script>
 </body>
 </html>

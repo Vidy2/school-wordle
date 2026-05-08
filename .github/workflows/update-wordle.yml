@@ -1,0 +1,40 @@
+name: Update Wordle
+
+on:
+  schedule:
+    - cron: '5 7 * * *'
+
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch Wordle
+        run: |
+
+          DATE=$(date +%F)
+
+          RESPONSE=$(curl -s "https://www.nytimes.com/svc/wordle/v2/$DATE.json")
+
+          ANSWER=$(python3 -c "import sys, json; print(json.load(sys.stdin)['solution'])" <<< "$RESPONSE")
+
+          echo "{\"answer\":\"$ANSWER\"}" > wordle.json
+
+      - name: Commit changes
+        run: |
+
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+
+          git add wordle.json
+
+          git diff --staged --quiet || git commit -m "Update Wordle"
+
+          git push
