@@ -49,7 +49,8 @@
             height: 3rem;
             text-align: center;
             font-size: 2rem;
-            transition: background-color 0.3s ease
+            transition: background-color 0.3s ease;
+            border: none;
         }
         #status {
             font-size: clamp(1rem, 3vw, 1.5rem);
@@ -165,7 +166,7 @@
                 } else {
                     input.style.backgroundColor = "#7e8281";
                 }
-                
+                input.style.color("white")
                 input.readOnly = true;
             });
             guess = guess.toLowerCase();
