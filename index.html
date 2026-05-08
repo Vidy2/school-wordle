@@ -159,13 +159,13 @@
                 guess += letter;
 
                 if (word[i] === letter) {
-                    input.style.backgroundColor = "green";
+                    input.style.backgroundColor = "57af54";
                 } else if (word.includes(letter)) {
-                    input.style.backgroundColor = "yellow";
+                    input.style.backgroundColor = "e2e03f";
                 } else {
-                    input.style.backgroundColor = "gray";
+                    input.style.backgroundColor = "7e8281";
                 }
-
+                
                 input.readOnly = true;
             });
             guess = guess.toLowerCase();
