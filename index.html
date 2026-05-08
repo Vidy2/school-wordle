@@ -49,6 +49,7 @@
             height: 3rem;
             text-align: center;
             font-size: 2rem;
+            transition: background-color 0.3s ease
         }
         #status {
             font-size: clamp(1rem, 3vw, 1.5rem);
@@ -129,8 +130,15 @@
             const cuRow = board.lastElementChild;
             const res = cuRow.querySelectorAll("input");
             let guess = "";
-            res.forEach(input =>{
+            res.forEach(input, i =>{
                 guess += input.value;
+                if (word[i] === guess[i]){
+                    input.style.backgroundColor = "green";
+                } else if (word.includes(guess[i])){
+                    input.style.backgroundColor = "yellow";
+                } else {
+                    input.style.backgroundColor = "gray";
+                }
                 input.readOnly = true;
             });
             guess = guess.toLowerCase();
