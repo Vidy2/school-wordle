@@ -130,15 +130,18 @@
             const cuRow = board.lastElementChild;
             const res = cuRow.querySelectorAll("input");
             let guess = "";
-            res.forEach(input, i =>{
-                guess += input.value;
-                if (word[i] === guess[i]){
+            res.forEach((input, i) => {
+                const letter = input.value.toLowerCase();
+                guess += letter;
+
+                if (word[i] === letter) {
                     input.style.backgroundColor = "green";
-                } else if (word.includes(guess[i])){
+                } else if (word.includes(letter)) {
                     input.style.backgroundColor = "yellow";
                 } else {
                     input.style.backgroundColor = "gray";
                 }
+
                 input.readOnly = true;
             });
             guess = guess.toLowerCase();
