@@ -136,6 +136,8 @@
         const status = document.getElementById("status");
         const board = document.getElementById("board");
         const submit = document.getElementById("submit");
+        submit.disabled = true;
+        submit.style.display = "none";
         function setUpInput(input){
             input.addEventListener("input", () => {
                 input.value = input.value.toLowerCase();
@@ -206,8 +208,6 @@
                     if (guess === word){
                         status.style.color = "green";
                         status.textContent = "You win!";
-                        submit.disabled = true;
-                        submit.style.display = "none";
                         return;
                     }
                     guessNum += 1;
