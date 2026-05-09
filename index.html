@@ -57,7 +57,7 @@
             border:none;
         }
         dialog {
-            position: relative; /* Needed for absolute positioning of children */
+            position: relative;
             padding: 2rem;
             border-radius: 8px;
             border: 1px solid #ccc;
@@ -164,11 +164,9 @@
             </div>
         </div>
         <p id ="status"></p>
-        <dialog id = "win">
-            <form method="dialog">
-                <button class="close-btn" aria-label="close">&times;</button>
-            </form>
-            <p style = "font-size: 1.5rem; font-weight: bold; color:green;">You won!</p>
+        <dialog id="win">
+            <button class="close-btn" aria-label="close">&times;</button>
+            <p style="font-size: 1.5rem; font-weight: bold; color:green;">You won!</p>
         </dialog>
     </section>
 
@@ -209,6 +207,10 @@
             }());
         }
         init();
+        const win = document.getElementById("win");
+        win.querySelector(".close-btn").addEventListener("click", () => {
+            win.close();
+        });
         const q = document.getElementById("q");
         const w = document.getElementById("w");
         const e = document.getElementById("e");
