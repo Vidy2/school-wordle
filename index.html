@@ -158,7 +158,7 @@
             });
         }
         document.querySelectorAll("input").forEach(setUpInput);
-        function guesser(){
+        async function guesser(){
             const cuRow = board.lastElementChild;
             const res = cuRow.querySelectorAll("input");
             let guess = "";
@@ -175,7 +175,8 @@
             }
             if (words.includes(guess)){
                 let temp = word.split("");
-                res.forEach((input, i) => {
+                for (let i = 0; i < res.length; i++) {
+                    const input = res[i];
                     if (guess[i] === temp[i]) {
                         input.style.backgroundColor = "#57af54";
                         temp[i] = null;
@@ -183,10 +184,12 @@
                         input.classList.add("pulse");
                         setTimeout(() => {
                             input.classList.remove("pulse");
-                        }, 200);
+                        }, 250);
+                        await new Promise(resolve => setTimeout(resolve, 250));
                     }
-                });
-                res.forEach((input, i) => {
+                };
+                for (let i = 0; i < res.length; i++) {
+                    const input = res[i];
                     if (input.style.backgroundColor === "rgb(87, 175, 84)") {
                         return;
                     }
@@ -203,11 +206,12 @@
                         input.classList.add("pulse");
                         setTimeout(() => {
                             input.classList.remove("pulse");
-                        }, 200);
+                        }, 250);
+                        await new Promise(resolve => setTimeout(resolve, 250));
                     }
                     input.style.color = "white";
                     input.readOnly = true;
-                });
+                };
                     guess = guess.toLowerCase();
                     if (guess === word){
                         status.style.color = "green";
