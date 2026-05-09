@@ -199,6 +199,7 @@
                 });
                     guess = guess.toLowerCase();
                     if (guess === word){
+                        input.readOnly = true;
                         status.style.color = "green";
                         status.textContent = "You win!";
                         submit.disabled = true;
