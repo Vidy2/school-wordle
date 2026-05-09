@@ -176,22 +176,27 @@
                 return;
             }
             if (words.includes(guess)){
-                let temp = word;
-                let l = 0;
+                let temp = word.split("");
                 res.forEach((input, i) => {
-                        if (temp[i] === guess[i]) {
-                            input.style.backgroundColor = "#57af54";
-                            temp = temp.slice(0,i) + temp.slice(i+1);
-                        } else if (temp.includes(guess[i])) {
-                            input.style.backgroundColor = "#cccc4f";
-                            l = temp.indexOf(guess[i]);
-                            temp = temp.slice(0,l) + temp.slice(l+1);
-                        } else {
-                            input.style.backgroundColor = "#7e8281";
-                        }
-                        input.style.color = "white";
-                        input.readOnly = true;
-                    });
+                    if (guess[i] === temp[i]) {
+                        input.style.backgroundColor = "#57af54";
+                        temp[i] = null;
+                    }
+                });
+                res.forEach((input, i) => {
+                    if (input.style.backgroundColor === "rgb(87, 175, 84)") {
+                        return;
+                    }
+                    const index = temp.indexOf(guess[i]);
+                    if (index !== -1) {
+                        input.style.backgroundColor = "#cccc4f";
+                        temp[index] = null;
+                    } else {
+                        input.style.backgroundColor = "#7e8281";
+                    }
+                    input.style.color = "white";
+                    input.readOnly = true;
+                });
                     guess = guess.toLowerCase();
                     if (guess === word){
                         status.style.color = "green";
