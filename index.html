@@ -113,38 +113,38 @@
         </div>
         <div id = "keyboard">
             <div class="row1">
-                <button style="display: inline-block">Q</button>
-                <button style="display: inline-block">W</button>
-                <button style="display: inline-block">E</button>
-                <button style="display: inline-block">R</button>
-                <button style="display: inline-block">T</button>
-                <button style="display: inline-block">Y</button>
-                <button style="display: inline-block">U</button>
-                <button style="display: inline-block">I</button>
-                <button style="display: inline-block">O</button>
-                <button style="display: inline-block">P</button>
+                <button id = "q"style="display: inline-block">Q</button>
+                <button id = "w"style="display: inline-block">W</button>
+                <button id = "e"style="display: inline-block">E</button>
+                <button id = "r"style="display: inline-block">R</button>
+                <button id = "t"style="display: inline-block">T</button>
+                <button id = "y"style="display: inline-block">Y</button>
+                <button id = "u"style="display: inline-block">U</button>
+                <button id = "i"style="display: inline-block">I</button>
+                <button id = "o"style="display: inline-block">O</button>
+                <button id = "p"style="display: inline-block">P</button>
             </div>
             <div class="row2">
-                <button style="display: inline-block">A</button>
-                <button style="display: inline-block">S</button>
-                <button style="display: inline-block">D</button>
-                <button style="display: inline-block">F</button>
-                <button style="display: inline-block">G</button>
-                <button style="display: inline-block">H</button>
-                <button style="display: inline-block">J</button>
-                <button style="display: inline-block">K</button>
-                <button style="display: inline-block">L</button>
+                <button id = "a"style="display: inline-block">A</button>
+                <button id = "s"style="display: inline-block">S</button>
+                <button id = "d"style="display: inline-block">D</button>
+                <button id = "f"style="display: inline-block">F</button>
+                <button id = "g"style="display: inline-block">G</button>
+                <button id = "h"style="display: inline-block">H</button>
+                <button id = "j"style="display: inline-block">J</button>
+                <button id = "k"style="display: inline-block">K</button>
+                <button id = "l"style="display: inline-block">L</button>
             </div>
             <div class="row3">
-                <button style="display: inline-block">Enter</button>
-                <button style="display: inline-block">Z</button>
-                <button style="display: inline-block">X</button>
-                <button style="display: inline-block">C</button>
-                <button style="display: inline-block">V</button>
-                <button style="display: inline-block">B</button>
-                <button style="display: inline-block">N</button>
-                <button style="display: inline-block">M</button>
-                <button style="display: inline-block">Backspace</button>
+                <button id = "enter"style="display: inline-block">Enter</button>
+                <button id = "z"style="display: inline-block">Z</button>
+                <button id = "x"style="display: inline-block">X</button>
+                <button id = "c"style="display: inline-block">C</button>
+                <button id = "v"style="display: inline-block">V</button>
+                <button id = "b"style="display: inline-block">B</button>
+                <button id = "n"style="display: inline-block">N</button>
+                <button id = "m"style="display: inline-block">M</button>
+                <button id = "backspace"style="display: inline-block">Backspace</button>
             </div>
         </div>
         <p id ="status"></p>
@@ -172,6 +172,38 @@
         }
 
         init();
+        const q = document.getElementById("q");
+        const w = document.getElementById("w");
+        const e = document.getElementById("e");
+        const r = document.getElementById("r");
+        const t = document.getElementById("t");
+        const y = document.getElementById("y");
+        const u = document.getElementById("u");
+        const i = document.getElementById("i");
+        const o = document.getElementById("o");
+        const p = document.getElementById("p");
+        const a = document.getElementById("a");
+        const s = document.getElementById("s");
+        const d = document.getElementById("d");
+        const f = document.getElementById("f");
+        const g = document.getElementById("g");
+        const h = document.getElementById("h");
+        const j = document.getElementById("j");
+        const k = document.getElementById("k");
+        const l = document.getElementById("l");
+        const z = document.getElementById("z");
+        const x = document.getElementById("x");
+        const c = document.getElementById("c");
+        const v = document.getElementById("v");
+        const b = document.getElementById("b");
+        const n = document.getElementById("n");
+        const m = document.getElementById("m");
+        const enter = document.getElementById("enter");
+        const backspace = document.getElementById("backspace");
+        const keyButtons = {};
+        "abcdefghijklmnopqrstuvwxyz".split("").forEach(letter => {
+            keyButtons[letter] = document.getElementById(letter);
+        });
         const status = document.getElementById("status");
         const board = document.getElementById("board");
         function setUpInput(input){
@@ -219,6 +251,7 @@
                     const input = res[i];
                     if (guess[i] === temp[i]) {
                         input.style.backgroundColor = "#57af54";
+                        keyButtons[guess[i]].style.backgroundColor = "#57af54";
                         temp[i] = null;
                         input.readOnly = true;
                         input.classList.add("pulse");
@@ -236,6 +269,7 @@
                     const index = temp.indexOf(guess[i]);
                     if (index !== -1) {
                         input.style.backgroundColor = "#cccc4f";
+                        keyButtons[guess[i]].style.backgroundColor = "#cccc4f";
                         temp[index] = null;
                         input.classList.add("pulse");
                         setTimeout(() => {
@@ -244,6 +278,7 @@
                         await new Promise(resolve => setTimeout(resolve, 250));
                     } else {
                         input.style.backgroundColor = "#7e8281";
+                        keyButtons[guess[i]].style.backgroundColor = "#7e8281";
                         input.classList.add("pulse");
                         setTimeout(() => {
                             input.classList.remove("pulse");
