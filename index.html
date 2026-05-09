@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://jsdelivr.net"></script>
     <title>Knockoff Word</title>
     <link rel="icon" type="image/png" href="./word-thing.png">
     <style>
@@ -189,23 +188,6 @@
             await loadWordl();
             await loadWords();
         }
-        function makeItRain() {
-            var end = Date.now() + 1000;
-
-            (function frame() {
-            confetti({
-                particleCount: 3,
-                angle: 90, // Direction: down
-                spread: 360,
-                origin: { x: Math.random(), y: -0.1 }, // Random horizontal start, just above top
-                colors: ['#ff0000', '#00ff00', '#0000ff'] // Optional: custom colors
-            });
-
-            if (Date.now() < end) {
-                requestAnimationFrame(frame);
-            }
-            }());
-        }
         init();
         const win = document.getElementById("win");
         win.querySelector(".close-btn").addEventListener("click", () => {
@@ -368,7 +350,6 @@
                     if (guess === word){
                         status.style.color = "green";
                         status.textContent = "You won!";
-                        makeItRain();
                         win.showModal();
                         return;
                     }
