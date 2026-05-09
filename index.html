@@ -148,7 +148,9 @@
             </div>
         </div>
         <p id ="status"></p>
-        
+        <dialog id = "win">
+            <p style = "font-size: 1.5rem; font-weight: bold; color:green;">You got it!</p>
+        </dialog>
     </section>
 
     <script>
@@ -328,7 +330,8 @@
                     guess = guess.toLowerCase();
                     if (guess === word){
                         status.style.color = "green";
-                        status.textContent = "You win!";
+                        status.textContent = "You won!";
+                        win.showModal();
                         return;
                     }
                     guessNum += 1;
