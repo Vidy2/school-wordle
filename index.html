@@ -159,10 +159,6 @@
         }
         document.querySelectorAll("input").forEach(setUpInput);
         function guesser(){
-            submit.classList.add("pulse");
-            setTimeout(() => {
-                submit.classList.remove("pulse");
-            }, 200);
             const cuRow = board.lastElementChild;
             const res = cuRow.querySelectorAll("input");
             let guess = "";
@@ -184,6 +180,10 @@
                         input.style.backgroundColor = "#57af54";
                         temp[i] = null;
                         input.readOnly = true;
+                        input.classList.add("pulse");
+                        setTimeout(() => {
+                            input.classList.remove("pulse");
+                        }, 200);
                     }
                 });
                 res.forEach((input, i) => {
@@ -194,8 +194,16 @@
                     if (index !== -1) {
                         input.style.backgroundColor = "#cccc4f";
                         temp[index] = null;
+                        input.classList.add("pulse");
+                        setTimeout(() => {
+                            input.classList.remove("pulse");
+                        }, 200);
                     } else {
                         input.style.backgroundColor = "#7e8281";
+                        input.classList.add("pulse");
+                        setTimeout(() => {
+                            input.classList.remove("pulse");
+                        }, 200);
                     }
                     input.style.color = "white";
                     input.readOnly = true;
@@ -213,8 +221,6 @@
                         });
                         status.textContent = `You lose, it was: ${word.toUpperCase()}`;
                         status.style.color = "red";
-                        submit.disabled = true;
-                        submit.style.display = "none";
                         return;
                     }
                     const nRow = document.createElement("div");
