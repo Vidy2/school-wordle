@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Knockoff thingy</title>
-    <link rel="icon" type="image/png" href="/workspaces/wordi/word thing.png">
+    <link rel="icon" type="image/png" href="/workspaces/wordi/word-thing.png">
     <style>
         html, body {
             height: 100%;
@@ -46,8 +46,8 @@
         }
         input{
             text-transform: uppercase;
-            width: 5rem;
-            height: 5rem;
+            width: clamp(3rem, 12vw, 5rem);
+            height: clamp(3rem, 12vw, 5rem);
             text-align: center;
             font-size: 2rem;
             transition: background-color 0.3s ease;
@@ -122,14 +122,14 @@
             words = text.split("\n").map(wordy => wordy.trim().toLowerCase());
         }
         async function loadWordl(){
-            const response = await fetch(`./wordy.json?t={Date.now()}`);
+            const response = await fetch(`./wordy.json?t=${Date.now()}`);
             const data = await response.json();
             word = data.answer;
             word = word.toLowerCase();
         }
         async function init() {
-            loadWordl();
-            loadWords();
+            await loadWordl();
+            await loadWords();
         }
 
         init();
@@ -185,6 +185,7 @@
                     if (guess[i] === temp[i]) {
                         input.style.backgroundColor = "#57af54";
                         temp[i] = null;
+                        input.readOnly = true;
                     }
                 });
                 res.forEach((input, i) => {
@@ -203,9 +204,6 @@
                 });
                     guess = guess.toLowerCase();
                     if (guess === word){
-                        document.querySelectorAll("input").forEach(input => {
-                            input.readOnly = true;
-                        });
                         status.style.color = "green";
                         status.textContent = "You win!";
                         submit.disabled = true;
