@@ -115,6 +115,7 @@
     <script>
         let word = "";
         let words = [];
+        let guessNum = 0;
         async function loadWords(){
             const response = await fetch("./valid-wordle-words.txt");
             const text = await response.text();
@@ -190,6 +191,8 @@
                     if (guess === word){
                         status.style.color = "green";
                         status.textContent = "You win!";
+                        submit.disabled = true;
+                        submit.style.display = "none";
                         return;
                     }
                     const nRow = document.createElement("div");
@@ -201,6 +204,15 @@
                         nRow.appendChild(input);
                     }
                     board.appendChild(nRow);
+                    guessNum++;
+                    if (guessNum > 5){
+                        input.readOnly = true;
+                        status.textContent = "You lose";
+                        status.style.color = "red";
+                        submit.disabled = true;
+                        submit.style.display = "none";
+                        return;
+                    }
             } else {
                 status.textContent = "Enter a real word";
                 status.style.color = "red";
