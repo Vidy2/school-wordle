@@ -204,6 +204,9 @@
             } else {
                 status.textContent = "Enter a real word";
                 status.style.color = "red";
+                setTimeout(() => {
+                    status.textContent = "";
+                }, 200);
             }
         });
 
