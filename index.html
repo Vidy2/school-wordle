@@ -117,8 +117,8 @@
         let words = [];
         async function loadWords(){
             const response = await fetch("./valid-wordle-words.txt");
-            const text = response.text();
-            words = text.split("\n").map(wordy => wordy.trim.toLowerCase());
+            const text = await response.text();
+            words = text.split("\n").map(wordy => wordy.trim().toLowerCase());
         }
         async function loadWordle(){
             const response = await fetch("./wordle.json");
