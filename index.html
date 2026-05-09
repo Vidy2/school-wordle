@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://jsdelivr.net"></script>
     <title>Knockoff Word</title>
     <link rel="icon" type="image/png" href="./word-thing.png">
     <style>
@@ -55,6 +56,12 @@
             background-color: #ccccbb;
             border:none;
         }
+        dialog {
+            position: relative; /* Needed for absolute positioning of children */
+            padding: 2rem;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            }
         #status {
             font-size: clamp(1rem, 3vw, 1.5rem);
             color: darkgreen;
@@ -64,6 +71,15 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+        }
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
         }
         .row1 {
             margin-top: 0.5rem;
@@ -149,7 +165,10 @@
         </div>
         <p id ="status"></p>
         <dialog id = "win">
-            <p style = "font-size: 1.5rem; font-weight: bold; color:green;">You got it!</p>
+            <form method="dialog">
+                <button class="close-btn" aria-label="close">&times;</button>
+            </form>
+            <p style = "font-size: 1.5rem; font-weight: bold; color:green;">You won!</p>
         </dialog>
     </section>
 
@@ -172,7 +191,23 @@
             await loadWordl();
             await loadWords();
         }
+        function makeItRain() {
+            var end = Date.now() + 1000;
 
+            (function frame() {
+            confetti({
+                particleCount: 3,
+                angle: 90, // Direction: down
+                spread: 360,
+                origin: { x: Math.random(), y: -0.1 }, // Random horizontal start, just above top
+                colors: ['#ff0000', '#00ff00', '#0000ff'] // Optional: custom colors
+            });
+
+            if (Date.now() < end) {
+                requestAnimationFrame(frame);
+            }
+            }());
+        }
         init();
         const q = document.getElementById("q");
         const w = document.getElementById("w");
@@ -331,6 +366,7 @@
                     if (guess === word){
                         status.style.color = "green";
                         status.textContent = "You won!";
+                        makeItRain();
                         win.showModal();
                         return;
                     }
