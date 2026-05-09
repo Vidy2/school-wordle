@@ -213,11 +213,9 @@
                         input.maxLength = 1;
                         setUpInput(input);
                         nRow.appendChild(input);
-                        if (i === 0){
-                            input.focus();
-                        }
                     }
                     board.appendChild(nRow);
+                    nRow.querySelector("input").focus();
             } else {
                 status.textContent = "Enter a real word";
                 status.style.color = "red";
