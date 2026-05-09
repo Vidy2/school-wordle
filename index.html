@@ -206,8 +206,9 @@
                     board.appendChild(nRow);
                     guessNum += 1;
                     if (guessNum > 5){
-                        input.readOnly = true;
-                        status.textContent = "You lose";
+                        document.querySelectorAll("input").forEach(inp => {
+                            inp.readOnly = true;
+                        status.textContent = "You lose, it was: '${word.toUpperCase()}";
                         status.style.color = "red";
                         submit.disabled = true;
                         submit.style.display = "none";
