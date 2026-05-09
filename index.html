@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Knockoff thingy</title>
-    <link rel="icon" type="image/webp" href="https://www.internetmatters.org/wp-content/uploads/2022/02/wordle-logo.webp">
+    <link rel="icon" type="image/png" href="https://resources.finalsite.net/images/f_auto,q_auto,t_image_size_2/v1727371380/agcharterorg/ou5eefuhydgl3jwtm2wm/Blocksi-blue-white.png">
     <style>
         html, body {
             height: 100%;
@@ -98,7 +98,7 @@
 <body>
 
     <section id="project">
-        <h1>Wordle</h1>
+        <h1>Word Thing</h1>
         <div id = "board">
             <div class = "row">
                 <input maxlength="1">
@@ -118,17 +118,17 @@
         let words = [];
         let guessNum = 0;
         async function loadWords(){
-            const response = await fetch("./valid-wordle-words.txt");
+            const response = await fetch("./valid-words.txt");
             const text = await response.text();
             words = text.split("\n").map(wordy => wordy.trim().toLowerCase());
         }
-        async function loadWordle(){
-            const response = await fetch("./wordle.json");
+        async function loadWordl(){
+            const response = await fetch("./wordy.json");
             const data = await response.json();
             word = data.answer;
             word = word.toLowerCase();
         }
-        loadWordle();
+        loadWordl();
         loadWords();
         const status = document.getElementById("status");
         const board = document.getElementById("board");
