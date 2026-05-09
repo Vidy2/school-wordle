@@ -208,6 +208,7 @@
                     if (guessNum > 5){
                         document.querySelectorAll("input").forEach(inp => {
                             inp.readOnly = true;
+                        });
                         status.textContent = "You lose, it was: '${word.toUpperCase()}";
                         status.style.color = "red";
                         submit.disabled = true;
