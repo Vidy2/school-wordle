@@ -11,7 +11,7 @@
             overflow-x: hidden;
         }
         body {
-            font-family: Helvetica, serif;
+            font-family: inherit, serif;
             margin: 0;
             padding: 0;
             line-height: 1.5;
@@ -39,10 +39,10 @@
         button {
             display: block;
             margin: 0 auto;
-            padding: 1rem 2rem;
+            padding: 0.5rem 1rem;
             border-radius: 20px;
             border: 3px solid #ccc;
-            font-size: clamp(1rem, 3vw, 1.2rem);
+            font-size: clamp(0.5rem, 1.5vw, 0.6rem);
         }
         input{
             text-transform: uppercase;
@@ -106,6 +106,41 @@
                 <input maxlength="1">
                 <input maxlength="1">
             </div>
+        </div>
+        <div id = "keyboard">
+            <div class=""row1>
+                <button>Q</button>
+                <button>W</button>
+                <button>E</button>
+                <button>R</button>
+                <button>T</button>
+                <button>Y</button>
+                <button>U</button>
+                <button>I</button>
+                <button>O</button>
+                <button>P</button>
+            </div>
+            <div class="row2">
+                <button>A</button>
+                <button>S</button>
+                <button>D</button>
+                <button>F</button>
+                <button>G</button>
+                <button>H</button>
+                <button>J</button>
+                <button>K</button>
+                <button>L</button>
+            </div>
+            <div class="row3">
+                <button>Enter</button>
+                <button>Z</button>
+                <button>X</button>
+                <button>C</button>
+                <button>V</button>
+                <button>B</button>
+                <button>N</button>
+                <button>M</button>
+                <button>Backspace</button>
         </div>
         <p id ="status"></p>
         
