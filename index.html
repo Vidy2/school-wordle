@@ -182,7 +182,7 @@
                         if (temp[i] === guess[i]) {
                             input.style.backgroundColor = "#57af54";
                             temp = temp.slice(0,i) + temp.slice(i+1);
-                        } else if (word.includes(temp[i])) {
+                        } else if (temp.includes(temp[i])) {
                             input.style.backgroundColor = "#cccc4f";
                             l = temp.indexOf(guess[i]);
                             temp = temp.slice(0,l) + temp.slice(l+1);
