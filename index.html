@@ -213,6 +213,9 @@
                         input.maxLength = 1;
                         setUpInput(input);
                         nRow.appendChild(input);
+                        if (i === 0){
+                            input.focus();
+                        }
                     }
                     board.appendChild(nRow);
             } else {
