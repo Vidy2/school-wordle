@@ -122,13 +122,17 @@
             words = text.split("\n").map(wordy => wordy.trim().toLowerCase());
         }
         async function loadWordl(){
-            const response = await fetch("./wordy.json");
+            const response = await fetch(`./wordy.json?t={Date.now()}`);
             const data = await response.json();
             word = data.answer;
             word = word.toLowerCase();
         }
-        loadWordl();
-        loadWords();
+        async function init() {
+            loadWordl();
+            loadWords();
+        }
+
+        init();
         const status = document.getElementById("status");
         const board = document.getElementById("board");
         const submit = document.getElementById("submit");
