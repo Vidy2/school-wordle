@@ -229,7 +229,32 @@
             activeInput.dispatchEvent(new Event("input"));
             }
         });
-    document.querySelectorAll("input").forEach(setUpInput);
+        const status = document.getElementById("status");
+        const board = document.getElementById("board");
+        function setUpInput(input){
+            input.addEventListener("input", () => {
+                input.value = input.value.toLowerCase();
+
+                if (input.value.length === 1){
+                    const next = input.nextElementSibling;
+
+                    if (next){
+                        next.focus();
+                    }
+                }
+            });
+
+            input.addEventListener("keydown", (e) => {
+                if (e.key === "Backspace" && input.value === ""){
+                    const previous = input.previousElementSibling;
+
+                    if (previous){
+                        previous.focus();
+                    }
+                }
+            });
+        }
+        document.querySelectorAll("input").forEach(setUpInput);
         async function guesser(){
             const cuRow = board.lastElementChild;
             const res = cuRow.querySelectorAll("input");
