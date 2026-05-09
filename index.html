@@ -114,14 +114,20 @@
 
     <script>
         let word = "";
+        let words = [];
+        async function loadWords(){
+            const response = await fetch("./valid-wordle-words.txt");
+            const text = response.text();
+            words = text.split("\n").map(wordy => wordy.trim.toLowerCase());
+        }
         async function loadWordle(){
             const response = await fetch("./wordle.json");
             const data = await response.json();
             word = data.answer;
             word = word.toLowerCase();
-            console.log(word);
         }
         loadWordle();
+        loadWords();
         const status = document.getElementById("status");
         const board = document.getElementById("board");
         const submit = document.getElementById("submit");
@@ -163,12 +169,12 @@
             if (guess.length !== 5) {
                 status.textContent = "Enter 5 letters";
                 status.style.color = "red";
+                setTimeout(() => {
+                    status.textContent = "";
+                }, 200);
                 return;
             }
-            const response = await fetch(
-                `https://api.dictionaryapi.dev/api/v2/entries/en/${guess}`
-            );
-            if (response.ok){
+            if (words.includes(guess)){
                 res.forEach((input, i) => {
                         if (word[i] === guess[i]) {
                             input.style.backgroundColor = "#57af54";
