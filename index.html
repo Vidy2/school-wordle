@@ -204,6 +204,118 @@
         "abcdefghijklmnopqrstuvwxyz".split("").forEach(letter => {
             keyButtons[letter] = document.getElementById(letter);
         });
+        q.addEventListener("click", () => {
+            document.activeElement.value += "q";
+            document.activeElement.dispatchEvent(new Event("input"));
+        });
+        w.addEventListener("click", () => {
+            document.activeElement.value += "w";
+            document.activeElement.dispatchEvent(new Event("input"));
+        });
+        e.addEventListener("click", () => {
+            document.activeElement.value += "e";
+            document.activeElement.dispatchEvent(new Event("input"));
+        });
+        r.addEventListener("click", () => {
+            document.activeElement.value += "r";
+            document.activeElement.dispatchEvent(new Event("input"));
+        });
+        t.addEventListener("click", () => {
+            document.activeElement.value += "t";
+            document.activeElement.dispatchEvent(new Event("input"));
+        });
+        y.addEventListener("click", () => {
+            document.activeElement.value += "y";
+            document.activeElement.dispatchEvent(new Event("input"));
+        });
+        u.addEventListener("click", () => {
+            document.activeElement.value += "u";
+            document.activeElement.dispatchEvent(new Event("input"));
+        });
+        i.addEventListener("click", () => {
+            document.activeElement.value += "i";
+            document.activeElement.dispatchEvent(new Event("input"));
+        });
+        o.addEventListener("click", () => {
+            document.activeElement.value += "o";
+            document.activeElement.dispatchEvent(new Event("input"));
+        });
+        p.addEventListener("click", () => {
+            document.activeElement.value += "p";
+            document.activeElement.dispatchEvent(new Event("input"));
+        });
+        a.addEventListener("click", () => {
+            document.activeElement.value += "a";
+            document.activeElement.dispatchEvent(new Event("input"));
+        });
+        s.addEventListener("click", () => {
+            document.activeElement.value += "s";
+            document.activeElement.dispatchEvent(new Event("input"));
+        });
+        d.addEventListener("click", () => {
+            document.activeElement.value += "d";
+            document.activeElement.dispatchEvent(new Event("input"));
+        });
+        f.addEventListener("click", () => {
+            document.activeElement.value += "f";
+            document.activeElement.dispatchEvent(new Event("input"));
+        });
+        g.addEventListener("click", () => {
+            document.activeElement.value += "g";
+            document.activeElement.dispatchEvent(new Event("input"));
+        });
+        h.addEventListener("click", () => {
+            document.activeElement.value += "h";
+            document.activeElement.dispatchEvent(new Event("input"));
+        });
+        j.addEventListener("click", () => {
+            document.activeElement.value += "j";
+            document.activeElement.dispatchEvent(new Event("input"));
+        });
+        k.addEventListener("click", () => {
+            document.activeElement.value += "k";
+            document.activeElement.dispatchEvent(new Event("input"));
+        });
+        l.addEventListener("click", () => {
+            document.activeElement.value += "l";
+            document.activeElement.dispatchEvent(new Event("input"));
+        });
+        z.addEventListener("click", () => {
+            document.activeElement.value += "z";
+            document.activeElement.dispatchEvent(new Event("input"));
+        });
+        x.addEventListener("click", () => {
+            document.activeElement.value += "x";
+            document.activeElement.dispatchEvent(new Event("input"));
+        });
+        c.addEventListener("click", () => {
+            document.activeElement.value += "c";
+            document.activeElement.dispatchEvent(new Event("input"));
+        });
+        v.addEventListener("click", () => {
+            document.activeElement.value += "v";
+            document.activeElement.dispatchEvent(new Event("input"));
+        });
+        b.addEventListener("click", () => {
+            document.activeElement.value += "b";
+            document.activeElement.dispatchEvent(new Event("input"));
+        });
+        n.addEventListener("click", () => {
+            document.activeElement.value += "n";
+            document.activeElement.dispatchEvent(new Event("input"));
+        });
+        m.addEventListener("click", () => {
+            document.activeElement.value += "m";
+            document.activeElement.dispatchEvent(new Event("input"));
+        });
+        backspace.addEventListener("click", () => {
+            const active = document.activeElement;
+            active.value = active.value.slice(0, -1);
+            active.dispatchEvent(new Event("input"));
+        });
+        enter.addEventListener("click", () => {
+            guesser();
+        });
         const status = document.getElementById("status");
         const board = document.getElementById("board");
         function setUpInput(input){
@@ -258,6 +370,10 @@
                         setTimeout(() => {
                             input.classList.remove("pulse");
                         }, 250);
+                        keyButtons[guess[i]].classList.add("pulse");
+                        setTimeout(() => {
+                            keyButtons[guess[i]].classList.remove("pulse");
+                        }, 250);
                         await new Promise(resolve => setTimeout(resolve, 250));
                     }
                 };
@@ -275,6 +391,10 @@
                         setTimeout(() => {
                             input.classList.remove("pulse");
                         }, 200);
+                        keyButtons[guess[i]].classList.add("pulse");
+                        setTimeout(() => {
+                            keyButtons[guess[i]].classList.remove("pulse");
+                        }, 250);
                         await new Promise(resolve => setTimeout(resolve, 250));
                     } else {
                         input.style.backgroundColor = "#7e8281";
@@ -282,6 +402,10 @@
                         input.classList.add("pulse");
                         setTimeout(() => {
                             input.classList.remove("pulse");
+                        }, 250);
+                        keyButtons[guess[i]].classList.add("pulse");
+                        setTimeout(() => {
+                            keyButtons[guess[i]].classList.remove("pulse");
                         }, 250);
                         await new Promise(resolve => setTimeout(resolve, 250));
                     }
