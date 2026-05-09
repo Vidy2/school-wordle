@@ -122,9 +122,6 @@
             console.log(word);
         }
         loadWordle();
-        const response = await fetch(
-            `https://api.dictionaryapi.dev/api/v2/entries/en/${word}`
-        );
         const status = document.getElementById("status");
         const board = document.getElementById("board");
         const submit = document.getElementById("submit");
@@ -152,7 +149,7 @@
             });
         }
         document.querySelectorAll("input").forEach(setUpInput);
-        submit.addEventListener("click",() =>{
+        submit.addEventListener("click", async() =>{
             submit.classList.add("pulse");
             setTimeout(() => {
                 submit.classList.remove("pulse");
@@ -163,7 +160,15 @@
             res.forEach((input, i) => {
                 guess += input.value.toLowerCase();
             });
-            if (guess.ok){
+            if (guess.length !== 5) {
+                status.textContent = "Enter 5 letters";
+                status.style.color = "red";
+                return;
+            }
+            const response = await fetch(
+                `https://api.dictionaryapi.dev/api/v2/entries/en/${guess}`
+            );
+            if (response.ok){
                 res.forEach((input, i) => {
                         if (word[i] === guess[i]) {
                             input.style.backgroundColor = "#57af54";
@@ -177,6 +182,7 @@
                     });
                     guess = guess.toLowerCase();
                     if (guess === word){
+                        status.style.color = "green";
                         status.textContent = "You win!";
                         return;
                     }
@@ -191,11 +197,7 @@
                     board.appendChild(nRow);
             } else {
                 status.textContent = "Enter a real word";
-                status.color = "red";
-                setTimeout(() => {
-                    status.textContent = "";
-                    status.color = "green";
-                }, 200);
+                status.style.color = "red";
             }
         });
 
