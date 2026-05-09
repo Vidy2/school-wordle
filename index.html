@@ -122,6 +122,9 @@
             console.log(word);
         }
         loadWordle();
+        const response = await fetch(
+            `https://api.dictionaryapi.dev/api/v2/entries/en/${word}`
+        );
         const status = document.getElementById("status");
         const board = document.getElementById("board");
         const submit = document.getElementById("submit");
@@ -150,41 +153,50 @@
         }
         document.querySelectorAll("input").forEach(setUpInput);
         submit.addEventListener("click",() =>{
-        submit.classList.add("pulse");
-        setTimeout(() => {
-            submit.classList.remove("pulse");
-        }, 200);
+            submit.classList.add("pulse");
+            setTimeout(() => {
+                submit.classList.remove("pulse");
+            }, 200);
             const cuRow = board.lastElementChild;
             const res = cuRow.querySelectorAll("input");
             let guess = "";
             res.forEach((input, i) => {
-                const letter = input.value.toLowerCase();
-                guess += letter;
-
-                if (word[i] === letter) {
-                    input.style.backgroundColor = "#57af54";
-                } else if (word.includes(letter)) {
-                    input.style.backgroundColor = "#cccc4f";
-                } else {
-                    input.style.backgroundColor = "#7e8281";
-                }
-                input.style.color = "white";
-                input.readOnly = true;
+                guess += input.value.toLowerCase();
             });
-            guess = guess.toLowerCase();
-            if (guess === word){
-                status.textContent = "You win!";
-                return;
+            if (guess.ok){
+                res.forEach((input, i) => {
+                        if (word[i] === guess[i]) {
+                            input.style.backgroundColor = "#57af54";
+                        } else if (word.includes(guess[i])) {
+                            input.style.backgroundColor = "#cccc4f";
+                        } else {
+                            input.style.backgroundColor = "#7e8281";
+                        }
+                        input.style.color = "white";
+                        input.readOnly = true;
+                    });
+                    guess = guess.toLowerCase();
+                    if (guess === word){
+                        status.textContent = "You win!";
+                        return;
+                    }
+                    const nRow = document.createElement("div");
+                    nRow.className = "row";
+                    for (let i = 0; i < 5; i++){
+                        const input = document.createElement("input");
+                        input.maxLength = 1;
+                        setUpInput(input);
+                        nRow.appendChild(input);
+                    }
+                    board.appendChild(nRow);
+            } else {
+                status.textContent = "Enter a real word";
+                status.color = "red";
+                setTimeout(() => {
+                    status.textContent = "";
+                    status.color = "green";
+                }, 200);
             }
-            const nRow = document.createElement("div");
-            nRow.className = "row";
-            for (let i = 0; i < 5; i++){
-                const input = document.createElement("input");
-                input.maxLength = 1;
-                setUpInput(input);
-                nRow.appendChild(input);
-            }
-            board.appendChild(nRow);
         });
 
     </script>
