@@ -195,6 +195,17 @@
                         submit.style.display = "none";
                         return;
                     }
+                    guessNum += 1;
+                    if (guessNum > 5){
+                        document.querySelectorAll("input").forEach(inp => {
+                            inp.readOnly = true;
+                        });
+                        status.textContent = `You lose, it was: ${word.toUpperCase()}`;
+                        status.style.color = "red";
+                        submit.disabled = true;
+                        submit.style.display = "none";
+                        return;
+                    }
                     const nRow = document.createElement("div");
                     nRow.className = "row";
                     for (let i = 0; i < 5; i++){
@@ -204,17 +215,6 @@
                         nRow.appendChild(input);
                     }
                     board.appendChild(nRow);
-                    guessNum += 1;
-                    if (guessNum > 5){
-                        document.querySelectorAll("input").forEach(inp => {
-                            inp.readOnly = true;
-                        });
-                        status.textContent = "You lose, it was: '${word.toUpperCase()}";
-                        status.style.color = "red";
-                        submit.disabled = true;
-                        submit.style.display = "none";
-                        return;
-                    }
             } else {
                 status.textContent = "Enter a real word";
                 status.style.color = "red";
