@@ -94,7 +94,6 @@
         }
         .pulse {
             animation: pulse 0.2s ease;
-            animation: flip 0.6s ease forwards;
         }
         .row {
             margin-bottom: 0.2rem;
@@ -106,12 +105,7 @@
             50% { transform: scale(1.08); }
             100% { transform: scale(1); }
         }
-        @keyframes flip {
-            0% { transform: rotateX(0); }
-            50% { transform: rotateX(90deg); }
-            100% { transform: rotateX(0); }
-        }
-        @media (max-width: 600px) {
+        @media (max-width: 200px) {
             h2 {
                 font-size: 2rem;
             }
@@ -309,11 +303,11 @@
                         input.classList.add("pulse");
                         setTimeout(() => {
                             input.classList.remove("pulse");
-                        }, 600);
+                        }, 200);
                         keyButtons[guess[i]].classList.add("pulse");
                         setTimeout(() => {
                             keyButtons[guess[i]].classList.remove("pulse");
-                        }, 600);
+                        }, 200);
                         await new Promise(resolve => setTimeout(resolve, 250));
                     }
                 };
@@ -334,7 +328,7 @@
                         keyButtons[guess[i]].classList.add("pulse");
                         setTimeout(() => {
                             keyButtons[guess[i]].classList.remove("pulse");
-                        }, 600);
+                        }, 200);
                         await new Promise(resolve => setTimeout(resolve, 250));
                     } else {
                         input.style.backgroundColor = "#7e8281";
@@ -342,11 +336,11 @@
                         input.classList.add("pulse");
                         setTimeout(() => {
                             input.classList.remove("pulse");
-                        }, 600);
+                        }, 200);
                         keyButtons[guess[i]].classList.add("pulse");
                         setTimeout(() => {
                             keyButtons[guess[i]].classList.remove("pulse");
-                        }, 600);
+                        }, 200);
                         await new Promise(resolve => setTimeout(resolve, 250));
                     }
                     input.style.color = "white";
