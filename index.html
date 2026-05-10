@@ -331,7 +331,7 @@
                             keyButtons[guess[i]].classList.remove("pulse");
                         }, 200);
                         await new Promise(resolve => setTimeout(resolve, 250));
-                    } else {
+                    } else if(used[i] != true) {
                         input.style.backgroundColor = "#7e8281";
                         keyButtons[guess[i]].style.backgroundColor = "#7e8281";
                         input.classList.add("pulse");
