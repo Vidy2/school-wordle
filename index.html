@@ -277,7 +277,8 @@
         }
         document.querySelectorAll("input").forEach(setUpInput);
         async function guesser(){
-            const cuRow = board.lastElementChild;
+            const rows = board.querySelectorAll(".row");
+            const cuRow = rows[guessNum]
             const res = cuRow.querySelectorAll("input");
             let guess = "";
             res.forEach((input, i) => {
