@@ -277,6 +277,7 @@
         }
         document.querySelectorAll("input").forEach(setUpInput);
         async function guesser(){
+            const used = [false, false, false, false, false];
             const rows = board.querySelectorAll(".row");
             const cuRow = rows[guessNum]
             const res = cuRow.querySelectorAll("input");
@@ -297,9 +298,14 @@
                 for (let i = 0; i < res.length; i++) {
                     const input = res[i];
                     if (guess[i] === temp[i]) {
+                        used[i] = true;
+                    }
+                };
+                for (let i = 0; i < res.length; i++) {
+                    const input = res[i];
+                    if (guess[i] === temp[i]) {
                         input.style.backgroundColor = "#57af54";
                         keyButtons[guess[i]].style.backgroundColor = "#57af54";
-                        temp[i] = null;
                         input.readOnly = true;
                         input.classList.add("pulse");
                         setTimeout(() => {
@@ -311,17 +317,11 @@
                         }, 200);
                         await new Promise(resolve => setTimeout(resolve, 250));
                     }
-                };
-                for (let i = 0; i < res.length; i++) {
-                    const input = res[i];
-                    if (input.style.backgroundColor === "rgb(87, 175, 84)") {
-                        continue;
-                    }
                     const index = temp.indexOf(guess[i]);
-                    if (index !== -1) {
+                    if (index !== -1 && !used[index]) {
                         input.style.backgroundColor = "#cccc4f";
                         keyButtons[guess[i]].style.backgroundColor = "#cccc4f";
-                        temp[index] = null;
+                        used[index] = true;
                         input.classList.add("pulse");
                         setTimeout(() => {
                             input.classList.remove("pulse");
