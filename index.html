@@ -303,6 +303,7 @@
                 };
                 for (let i = 0; i < res.length; i++) {
                     const input = res[i];
+                    const index = temp.indexOf(guess[i]);
                     if (guess[i] === temp[i]) {
                         input.style.backgroundColor = "#57af54";
                         keyButtons[guess[i]].style.backgroundColor = "#57af54";
@@ -317,8 +318,7 @@
                         }, 200);
                         await new Promise(resolve => setTimeout(resolve, 250));
                     }
-                    const index = temp.indexOf(guess[i]);
-                    if (index !== -1 && !used[index]) {
+                    else if (index !== -1 && !used[index]) {
                         input.style.backgroundColor = "#cccc4f";
                         keyButtons[guess[i]].style.backgroundColor = "#cccc4f";
                         temp[index] = null;
