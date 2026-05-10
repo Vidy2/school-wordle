@@ -1,0 +1,27 @@
+name: Daily Connections Fetch
+on:
+  schedule:
+    - cron: '0 0 * * *'
+      timezone: 'America/Los_Angeles'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+      - name: Install dependencies
+        run: pip install requests
+      - name: Fetch puzzle
+        run: python fetch_connections.py
+      - name: Commit and push changes
+        run: |
+          git config --global user.name 'github-actions'
+          git config --global user.email 'github-actions@github.com'
+          git add data/connections.json
+          git commit -m "Update Connections puzzle for $(date +'%Y-%m-%d')" || exit 0
+          git push
