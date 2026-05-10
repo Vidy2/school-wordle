@@ -10,5 +10,5 @@ response = requests.get(url)
 if response.status_code == 200:
     data = response.json()
     os.makedirs('data', exist_ok=True)
-    with open(f'data/connections.json', 'w') as f:
+    with open(f'connect.json', 'w') as f:
         json.dump(data, f)
