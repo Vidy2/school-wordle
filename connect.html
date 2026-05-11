@@ -122,7 +122,6 @@
             const response = await fetch("connect.json");
             const data = await response.json();
             const cards = data.categories.flatMap(category => category.cards);
-            const buttons = document.querySelectorAll("#board button");
             const board = document.getElementById("board");
             for (let i = 0; i < 4; i++) {
                 const row = document.createElement("div");
@@ -130,12 +129,10 @@
                 for (let j = 0; j < 4; j++) {
                     const button = document.createElement("button");
                     button.id = (i * 4 + j);
-                    buttons.forEach(button => {
-                        const num = parseInt(button.id);
-                        const card = cards.find(c => c.id === num);
-                        button.textContent = card ? card.content : "";
-                        row.appendChild(button);
-                    });
+                    const num = parseInt(button.id);
+                    const card = cards.find(c => c.id === num);
+                    button.textContent = card ? card.content : "";
+                    row.appendChild(button);
                     board.appendChild(row);
                 }
             }
