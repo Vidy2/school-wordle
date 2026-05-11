@@ -130,11 +130,11 @@
                     const button = document.createElement("button");
                     button.id = (i * 4 + j);
                     const num = parseInt(button.id);
-                    const card = cards.find(c => c.id === num);
+                    const card = cards.find(c => c.position === num);
                     button.textContent = card ? card.content : "";
                     row.appendChild(button);
-                    board.appendChild(row);
                 }
+                board.appendChild(row);
             }
         }
     </script>
