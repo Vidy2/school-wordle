@@ -1,7 +1,7 @@
 name: Daily Connections Fetch
 on:
   schedule:
-    - cron: '55 23 * * *'
+    - cron: '0 0 * * *'
       timezone: 'America/Los_Angeles'
   workflow_dispatch:
 

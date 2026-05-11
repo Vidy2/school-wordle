@@ -1,9 +1,9 @@
 import requests
-from datetime import datetime
+from datetime import datetime, timedelta
 import json
 import os
 
-today = datetime.now().strftime('%Y-%m-%d')
+today = (datetime.utcnow() - timedelta(hours=7)).strftime('%Y-%m-%d')
 
 url = f"https://www.nytimes.com/svc/connections/v2/{today}.json"
 
