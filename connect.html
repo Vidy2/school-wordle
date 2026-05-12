@@ -140,6 +140,12 @@
                 board.appendChild(row);
             }
         }
+        document.querySelectorAll("button").forEach(button => {
+            button.addEventListener("click", () => {
+                button.classList.add("pulse");
+                setTimeout(() => button.classList.remove("pulse"), 200);
+            });
+        });
         loadConnect();
     </script>
 </body>
