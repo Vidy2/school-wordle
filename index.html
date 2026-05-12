@@ -402,6 +402,7 @@
                 };
                     guess = guess.toLowerCase();
                     if (guess === word){
+                        saveProgress();
                         status.style.color = "green";
                         status.textContent = "You won!";
                         win.showModal();
