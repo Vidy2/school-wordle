@@ -131,6 +131,7 @@
                 row.className = "row";
                 for (let j = 0; j < 4; j++) {
                     const button = document.createElement("button");
+                    button.dataset.var = false;
                     button.id = (i * 4 + j);
                     const num = parseInt(button.id);
                     const card = cards.find(c => c.position === num);
@@ -147,5 +148,12 @@
             });
         });
         loadConnect();
+        const buttons = document.querySelectorAll("button");
+        buttons.forEach(button => {
+            button.addEventListener('click', () => {
+                button.style.backgroundColor = "gray";
+                button.dataset.var = true;
+            });
+        });
     </script>
 </body>

@@ -170,6 +170,45 @@
     </section>
 
     <script>
+        function cookieSetter(){
+            if (document.cookie.indexOf("vistorID=") === -1){
+                let now = new Date();
+                let uniqueID = Date.now();
+                let midnight = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59);
+                document.cookie = "visitorID=" + uniqueID + ";expires=" + midnight.toUTCString() + "; path=/";
+            }
+        }
+        function saveProgress() {
+            const rows = board.querySelectorAll(".row");
+            let currentGuesses = [];
+            rows.forEach(row => {
+                const inputs = row.querySelectorAll("input");
+                let guess = Array.from(inputs).map(i => i.value).join("");
+                if (guess.length === 5) currentGuesses.push(guess);
+            });
+            const state = {
+                word: word,
+                guesses: currentGuesses,
+                guessNum: guessNum
+            };
+            let now = new Date();
+            let midnight = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59);
+            document.cookie = "wordleState=" + JSON.stringify(state) + ";expires=" + midnight.toUTCString() + "; path=/";
+        }
+        
+        cookieSetter();
+        function loadProgress() {
+            const name = "wordleState=";
+            const decodedCookie = decodeURIComponent(document.cookie);
+            const ca = decodedCookie.split(';');
+            for(let i = 0; i < ca.length; i++) {
+                let c = ca[i].trim();
+                if (c.indexOf(name) == 0) {
+                    return JSON.parse(c.substring(name.length, c.length));
+                }
+            }
+            return null;
+        }
         let word = "";
         let words = [];
         let guessNum = 0;
@@ -187,6 +226,17 @@
         async function init() {
             await loadWordl();
             await loadWords();
+            const saved = loadProgress();
+            if (saved && saved.word === word) {
+                guessNum = 0;
+                for (let g of saved.guesses) {
+                    const inputs = board.querySelectorAll(".row")[guessNum].querySelectorAll("input");
+                    g.split("").forEach((letter, i) => {
+                        inputs[i].value = letter;
+                    });
+                await guesser();
+                }
+            }
         }
         init();
         const win = document.getElementById("win");
@@ -232,22 +282,24 @@
             return Array.from(inputs).find(input => input.value === "");
         }
         document.getElementById("keyboard").addEventListener("click", (e) => {
-        if (e.target.tagName !== "BUTTON") return;
-        const key = e.target.id;
-        const activeInput = getActiveInput();
-        if (key === "enter") {
-            guesser();
-        } else if (key === "backspace") {
-            const cuRow = board.lastElementChild;
-            const inputs = Array.from(cuRow.querySelectorAll("input"));
-            const lastFilled = inputs.reverse().find(input => input.value !== "");
-            if (lastFilled) {
-                lastFilled.value = "";
-                lastFilled.focus();
-            }
-        } else if (key.length === 1 && activeInput) {
-            activeInput.value = key;
-            activeInput.dispatchEvent(new Event("input"));
+            if (e.target.tagName !== "BUTTON") return;
+            const key = e.target.id;
+            const activeInput = getActiveInput();
+            if (!activeInput.readOnly){
+                if (key === "enter") {
+                    guesser();
+                } else if (key === "backspace") {
+                    const cuRow = board.lastElementChild;
+                    const inputs = Array.from(cuRow.querySelectorAll("input"));
+                    const lastFilled = inputs.reverse().find(input => input.value !== "");
+                    if (lastFilled) {
+                        lastFilled.value = "";
+                        lastFilled.focus();
+                    }
+                } else if (key.length === 1 && activeInput) {
+                    activeInput.value = key;
+                    activeInput.dispatchEvent(new Event("input"));
+                    }
             }
         });
         const status = document.getElementById("status");
@@ -350,12 +402,14 @@
                 };
                     guess = guess.toLowerCase();
                     if (guess === word){
+                        saveProgress();
                         status.style.color = "green";
                         status.textContent = "You won!";
                         win.showModal();
                         return;
                     }
                     guessNum += 1;
+                    saveProgress();
                     if (guessNum > 5){
                         document.querySelectorAll("input").forEach(inp => {
                             inp.readOnly = true;
