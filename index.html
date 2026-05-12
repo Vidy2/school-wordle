@@ -175,7 +175,7 @@
                 let now = new Date();
                 let uniqueID = Date.now();
                 let midnight = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59);
-                document.cookie = "visitorID=" + uniqueID + ";expires=" + midnight + "; path=/";
+                document.cookie = "visitorID=" + uniqueID + ";expires=" + midnight.toUTCString() + "; path=/";
             }
         }
         function saveProgress() {
@@ -191,6 +191,9 @@
                 guesses: currentGuesses,
                 guessNum: guessNum
             };
+            let now = new Date();
+            let midnight = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59);
+            document.cookie = "wordleState=" + JSON.stringify(state) + ";expires=" + midnight.toUTCString() + "; path=/";
         }
         
         cookieSetter();
