@@ -232,22 +232,24 @@
             return Array.from(inputs).find(input => input.value === "");
         }
         document.getElementById("keyboard").addEventListener("click", (e) => {
-        if (e.target.tagName !== "BUTTON") return;
-        const key = e.target.id;
-        const activeInput = getActiveInput();
-        if (key === "enter") {
-            guesser();
-        } else if (key === "backspace") {
-            const cuRow = board.lastElementChild;
-            const inputs = Array.from(cuRow.querySelectorAll("input"));
-            const lastFilled = inputs.reverse().find(input => input.value !== "");
-            if (lastFilled) {
-                lastFilled.value = "";
-                lastFilled.focus();
-            }
-        } else if (key.length === 1 && activeInput) {
-            activeInput.value = key;
-            activeInput.dispatchEvent(new Event("input"));
+            if (e.target.tagName !== "BUTTON") return;
+            const key = e.target.id;
+            const activeInput = getActiveInput();
+            if (!activeInput.readOnly){
+                if (key === "enter") {
+                    guesser();
+                } else if (key === "backspace") {
+                    const cuRow = board.lastElementChild;
+                    const inputs = Array.from(cuRow.querySelectorAll("input"));
+                    const lastFilled = inputs.reverse().find(input => input.value !== "");
+                    if (lastFilled) {
+                        lastFilled.value = "";
+                        lastFilled.focus();
+                    }
+                } else if (key.length === 1 && activeInput) {
+                    activeInput.value = key;
+                    activeInput.dispatchEvent(new Event("input"));
+                    }
             }
         });
         const status = document.getElementById("status");
