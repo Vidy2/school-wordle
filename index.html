@@ -170,6 +170,13 @@
     </section>
 
     <script>
+        function cookieSetter(){
+            if (doucment.cookie.indexOf("vistorID=") === -1){
+                let uniqueID = Date.now();
+                document.cookie = "visitorID=" + uniqueID + ";max-age:31560000; path=/";
+            }
+        }
+        cookieSetter();
         let word = "";
         let words = [];
         let guessNum = 0;
