@@ -172,7 +172,7 @@
     <script>
         function cookieSetter(){
             if (document.cookie.indexOf("vistorID=") === -1){
-                let now = Date.now();
+                let now = new Date();
                 let uniqueID = Date.now();
                 let midnight = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59);
                 document.cookie = "visitorID=" + uniqueID + ";expires=" + midnight + "; path=/";
