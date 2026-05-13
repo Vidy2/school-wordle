@@ -210,7 +210,7 @@
         }
         init();
         async function reset(){
-            await init();
+            await loadWordl();
             guessNum = 0;
             status.textContent = "";
             board.innerHTML = "";
