@@ -175,7 +175,6 @@
         <dialog id="win">
             <button class="close-btn" aria-label="close">&times;</button>
             <p style="font-size: 1.5rem; font-weight: bold; color:green;">You won!</p>
-            <button id="share">Share</button>
         </dialog>
         <button class="corner-link" onclick="pulse(this);location.href='inf.html'">Infinite</button>
     </section>
@@ -261,11 +260,6 @@
         const win = document.getElementById("win");
         win.querySelector(".close-btn").addEventListener("click", () => {
             win.close();
-        });
-        win.querySelector("#share").addEventListener("click", () => {
-            navigator.share({
-                title: "My word results"
-            });
         });
         const q = document.getElementById("q");
         const w = document.getElementById("w");
