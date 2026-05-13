@@ -176,10 +176,17 @@
             <button class="close-btn" aria-label="close">&times;</button>
             <p style="font-size: 1.5rem; font-weight: bold; color:green;">You won!</p>
         </dialog>
-        <button class="corner-link" onclick="location.href='inf.html'">Infinite</button>
+        <button class="corner-link" onclick="location.href='inf.html';pulse(this)">Infinite</button>
     </section>
 
     <script>
+        function pulse(element) {
+            element.classList.remove("pulse");
+
+            void element.offsetWidth;
+
+            element.classList.add("pulse");
+        }
         function cookieSetter(){
             if (document.cookie.indexOf("visitorID=") === -1){
                 let now = new Date();
