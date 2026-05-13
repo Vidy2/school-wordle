@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Knockoff Word</title>
+    <link rel="icon" type="image/png" href="./word-thing.png">
+    <style>
+        html, body {
+            height: 100%;
+            overflow-x: hidden;
+        }
+        body {
+            font-family: inherit, serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.5;
+            overflow-x: hidden;
+            background-size: cover;
+            background-repeat: no-repeat;
+            min-height: 100dvh;
+            background-color: #e5e5da;
+        }
+
+        section {
+            padding: clamp(1rem, 4vw, 2rem);
+            text-align:center;
+        }
+
+        h1 {
+            font-size: clamp(1.8rem, 5vw, 3rem);
+            text-align: center;
+        }
+
+        a {
+            color: #007BFF;
+            text-decoration: none;
+        }
+        button {
+            display: block;
+            margin: 0 auto;
+            padding: 0.5rem 1rem;
+            text-align: center;
+            border-radius: 20px;
+            border: 3px solid #ccc;
+            font-size: clamp(1rem, 3vw, 1.2rem);
+        }
+        input{
+            text-transform: uppercase;
+            width: clamp(3rem, 12vw, 5rem);
+            height: clamp(3rem, 12vw, 5rem);
+            text-align: center;
+            font-size: 2rem;
+            transition: background-color 0.3s ease;
+            background-color: #ccccbb;
+            border:none;
+        }
+        dialog {
+            position: relative;
+            padding: 2rem;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            }
+        #status {
+            font-size: clamp(1rem, 3vw, 1.5rem);
+            color: darkgreen;
+            margin-top: 1rem;
+        }
+        #board {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        .row1 {
+            margin-top: 0.5rem;
+        }
+        .corner-link {
+            position: fixed;
+            bottom: 1rem;
+            right: 1rem;
+            background: #fff;
+            padding: 0.3rem 0.6rem;
+            border-radius: 5px;
+            font-size: 0.8rem;
+        }
+        .pulse {
+            animation: pulse 0.2s ease;
+        }
+        .row {
+            margin-bottom: 0.2rem;
+            gap: 0.3rem;
+            display: flex
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+            100% { transform: scale(1); }
+        }
+        @media (max-width: 200px) {
+            h2 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <section id="project">
+        <h1>Guess the Word</h1>
+        <div id = "board">
+            <div class = "row">
+                <input inputmode="none" maxlength="1">
+                <input inputmode="none" maxlength="1">
+                <input inputmode="none" maxlength="1">
+                <input inputmode="none" maxlength="1">
+                <input inputmode="none" maxlength="1">
+            </div>
+        </div>
+        <div id = "keyboard">
+            <div class="row1">
+                <button id = "q"style="display: inline-block">Q</button>
+                <button id = "w"style="display: inline-block">W</button>
+                <button id = "e"style="display: inline-block">E</button>
+                <button id = "r"style="display: inline-block">R</button>
+                <button id = "t"style="display: inline-block">T</button>
+                <button id = "y"style="display: inline-block">Y</button>
+                <button id = "u"style="display: inline-block">U</button>
+                <button id = "i"style="display: inline-block">I</button>
+                <button id = "o"style="display: inline-block">O</button>
+                <button id = "p"style="display: inline-block">P</button>
+            </div>
+            <div class="row2">
+                <button id = "a"style="display: inline-block">A</button>
+                <button id = "s"style="display: inline-block">S</button>
+                <button id = "d"style="display: inline-block">D</button>
+                <button id = "f"style="display: inline-block">F</button>
+                <button id = "g"style="display: inline-block">G</button>
+                <button id = "h"style="display: inline-block">H</button>
+                <button id = "j"style="display: inline-block">J</button>
+                <button id = "k"style="display: inline-block">K</button>
+                <button id = "l"style="display: inline-block">L</button>
+            </div>
+            <div class="row3">
+                <button id = "enter"style="display: inline-block">Enter</button>
+                <button id = "z"style="display: inline-block">Z</button>
+                <button id = "x"style="display: inline-block">X</button>
+                <button id = "c"style="display: inline-block">C</button>
+                <button id = "v"style="display: inline-block">V</button>
+                <button id = "b"style="display: inline-block">B</button>
+                <button id = "n"style="display: inline-block">N</button>
+                <button id = "m"style="display: inline-block">M</button>
+                <button id = "backspace"style="display: inline-block">Backspace</button>
+            </div>
+        </div>
+        <p id ="status"></p>
+        <dialog id="win">
+            <button class="close-btn" aria-label="close">&times;</button>
+            <p style="font-size: 1.5rem; font-weight: bold; color:green;">You won!</p>
+        </dialog>
+    </section>
+
+    <script>
+        let word = "";
+        let words = [];
+        let guessNum = 0;
+        async function loadWords(){
+            const response = await fetch("./valid-words.txt");
+            const text = await response.text();
+            words = text.split("\n").map(wordy => wordy.trim().toLowerCase());
+        }
+        async function loadWordl(){
+            const response = await fetch("./word-answers.txt");
+            const data = await response.text();
+            word = data.trim().toLowerCase();
+            word = word.split("\n")[Math.floor(Math.random() * 2315)].trim();
+        }
+        async function init() {
+            await loadWordl();
+            await loadWords();
+        }
+        init();
+        const win = document.getElementById("win");
+        win.querySelector(".close-btn").addEventListener("click", () => {
+            win.close();
+        });
+        const q = document.getElementById("q");
+        const w = document.getElementById("w");
+        const e = document.getElementById("e");
+        const r = document.getElementById("r");
+        const t = document.getElementById("t");
+        const y = document.getElementById("y");
+        const u = document.getElementById("u");
+        const i = document.getElementById("i");
+        const o = document.getElementById("o");
+        const p = document.getElementById("p");
+        const a = document.getElementById("a");
+        const s = document.getElementById("s");
+        const d = document.getElementById("d");
+        const f = document.getElementById("f");
+        const g = document.getElementById("g");
+        const h = document.getElementById("h");
+        const j = document.getElementById("j");
+        const k = document.getElementById("k");
+        const l = document.getElementById("l");
+        const z = document.getElementById("z");
+        const x = document.getElementById("x");
+        const c = document.getElementById("c");
+        const v = document.getElementById("v");
+        const b = document.getElementById("b");
+        const n = document.getElementById("n");
+        const m = document.getElementById("m");
+        const enter = document.getElementById("enter");
+        const backspace = document.getElementById("backspace");
+        let stop = false;
+        const keyButtons = {};
+        "abcdefghijklmnopqrstuvwxyz".split("").forEach(letter => {
+            keyButtons[letter] = document.getElementById(letter);
+        });
+        function getActiveInput() {
+            const cuRow = board.lastElementChild;
+            const inputs = cuRow.querySelectorAll("input");
+            return Array.from(inputs).find(input => input.value === "");
+        }
+        document.getElementById("keyboard").addEventListener("click", (e) => {
+            if (e.target.tagName !== "BUTTON") return;
+            const key = e.target.id;
+            const activeInput = getActiveInput();
+            if (!activeInput.readOnly){
+                if (key === "enter") {
+                    guesser();
+                } else if (key === "backspace") {
+                    const cuRow = board.lastElementChild;
+                    const inputs = Array.from(cuRow.querySelectorAll("input"));
+                    const lastFilled = inputs.reverse().find(input => input.value !== "");
+                    if (lastFilled) {
+                        lastFilled.value = "";
+                        lastFilled.focus();
+                    }
+                } else if (key.length === 1 && activeInput) {
+                    activeInput.value = key;
+                    activeInput.dispatchEvent(new Event("input"));
+                    }
+            }
+        });
+        const status = document.getElementById("status");
+        const board = document.getElementById("board");
+        function setUpInput(input){
+            input.addEventListener("input", () => {
+                input.value = input.value.toLowerCase();
+
+                if (input.value.length === 1){
+                    const next = input.nextElementSibling;
+
+                    if (next){
+                        next.focus();
+                    }
+                }
+            });
+
+            input.addEventListener("keydown", (e) => {
+                if (e.key === "Backspace" && input.value === ""){
+                    const previous = input.previousElementSibling;
+
+                    if (previous){
+                        previous.focus();
+                    }
+                }
+            });
+        }
+        document.querySelectorAll("input").forEach(setUpInput);
+        async function guesser(){
+            const used = [false, false, false, false, false];
+            const rows = board.querySelectorAll(".row");
+            const cuRow = rows[guessNum]
+            const res = cuRow.querySelectorAll("input");
+            let guess = "";
+            res.forEach((input, i) => {
+                guess += input.value.toLowerCase();
+            });
+            if (guess.length !== 5) {
+                status.textContent = "Enter 5 letters";
+                status.style.color = "red";
+                setTimeout(() => {
+                    status.textContent = "";
+                }, 2000);
+                return;
+            }
+            if (words.includes(guess)){
+                let temp = word.split("");
+                for (let i = 0; i < res.length; i++) {
+                    const input = res[i];
+                    if (guess[i] === temp[i]) {
+                        used[i] = true;
+                    }
+                };
+                for (let i = 0; i < res.length; i++) {
+                    const input = res[i];
+                    const index = temp.indexOf(guess[i]);
+                    if (guess[i] === temp[i]) {
+                        input.style.backgroundColor = "#57af54";
+                        keyButtons[guess[i]].style.backgroundColor = "#57af54";
+                        input.readOnly = true;
+                        input.classList.add("pulse");
+                        setTimeout(() => {
+                            input.classList.remove("pulse");
+                        }, 200);
+                        keyButtons[guess[i]].classList.add("pulse");
+                        setTimeout(() => {
+                            keyButtons[guess[i]].classList.remove("pulse");
+                        }, 200);
+                        await new Promise(resolve => setTimeout(resolve, 250));
+                    }
+                    else if (index !== -1 && !used[index]) {
+                        input.style.backgroundColor = "#cccc4f";
+                        keyButtons[guess[i]].style.backgroundColor = "#cccc4f";
+                        temp[index] = null;
+                        used[index] = true;
+                        input.classList.add("pulse");
+                        setTimeout(() => {
+                            input.classList.remove("pulse");
+                        }, 200);
+                        keyButtons[guess[i]].classList.add("pulse");
+                        setTimeout(() => {
+                            keyButtons[guess[i]].classList.remove("pulse");
+                        }, 200);
+                        await new Promise(resolve => setTimeout(resolve, 250));
+                    } else {
+                        input.style.backgroundColor = "#7e8281";
+                        keyButtons[guess[i]].style.backgroundColor = "#7e8281";
+                        input.classList.add("pulse");
+                        setTimeout(() => {
+                            input.classList.remove("pulse");
+                        }, 200);
+                        keyButtons[guess[i]].classList.add("pulse");
+                        setTimeout(() => {
+                            keyButtons[guess[i]].classList.remove("pulse");
+                        }, 200);
+                        await new Promise(resolve => setTimeout(resolve, 250));
+                    }
+                    input.style.color = "white";
+                    input.readOnly = true;
+                };
+                    guess = guess.toLowerCase();
+                    if (guess === word){
+                        status.style.color = "green";
+                        status.textContent = "You won!";
+                        win.showModal();
+                        return;
+                    }
+                    guessNum += 1;
+                    if (guessNum > 5){
+                        document.querySelectorAll("input").forEach(inp => {
+                            inp.readOnly = true;
+                        });
+                        status.textContent = `You lose, it was: ${word.toUpperCase()}`;
+                        status.style.color = "red";
+                        return;
+                    }
+                    const nRow = document.createElement("div");
+                    nRow.className = "row";
+                    for (let i = 0; i < 5; i++){
+                        const input = document.createElement("input");
+                        input.maxLength = 1;
+                        setUpInput(input);
+                        nRow.appendChild(input);
+                    }
+                    board.appendChild(nRow);
+                    nRow.querySelector("input").focus();
+            } else {
+                status.textContent = "Enter a real word";
+                status.style.color = "red";
+                setTimeout(() => {
+                    status.textContent = "";
+                }, 2000);
+            }
+        };
+        document.addEventListener("keydown",(e) => {
+            if (e.key === "Enter"){
+                guesser();
+            }
+        });
+
+    </script>
+</body>
+</html>
