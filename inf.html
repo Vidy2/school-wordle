@@ -178,7 +178,7 @@
         <dialog id="win">
             <button class="close-btn" aria-label="close">&times;</button>
             <p style="font-size: 1.5rem; font-weight: bold; color:green;">You won!</p>
-            <button onclick="reset(); pulse(this)">New Word</button>
+            <button id="reste" onclick="reset(); pulse(this)">New Word</button>
         </dialog>
     </section>
 
@@ -233,7 +233,7 @@
         win.querySelector(".close-btn").addEventListener("click", () => {
             win.close();
         });
-        win.querySelector("New Word").addEventListener("click", () => {
+        win.querySelector("#reste").addEventListener("click", () => {
             win.close();
         });
         const q = document.getElementById("q");
