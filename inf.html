@@ -206,6 +206,7 @@
         async function init() {
             await loadWordl();
             await loadWords();
+            getActiveInput().focus();
         }
         init();
         async function reset(){
