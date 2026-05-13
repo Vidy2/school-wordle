@@ -90,7 +90,16 @@
             background: #fff;
             padding: 0.3rem 0.6rem;
             border-radius: 5px;
-            font-size: 0.8rem;
+            font-size: 1.6rem;
+        }
+        .corner-link-2 {
+            position: fixed;
+            bottom: 1rem;
+            right: 6.5rem;
+            background: #fff;
+            padding: 0.3rem 0.6rem;
+            border-radius: 5px;
+            font-size: 1.6rem;
         }
         .pulse {
             animation: pulse 0.2s ease;
@@ -163,6 +172,8 @@
             </div>
         </div>
         <p id ="status"></p>
+        <button class="corner-link" onclick="location.href='index.html';pulse(this)">Daily</button>
+        <button class="corner-link-2" onclick="reset(); pulse(this)">New Word</button>
         <dialog id="win">
             <button class="close-btn" aria-label="close">&times;</button>
             <p style="font-size: 1.5rem; font-weight: bold; color:green;">You won!</p>
@@ -173,6 +184,13 @@
         let word = "";
         let words = [];
         let guessNum = 0;
+        function pulse(element) {
+            element.classList.remove("pulse");
+
+            void element.offsetWidth;
+
+            element.classList.add("pulse");
+        }
         async function loadWords(){
             const response = await fetch("./valid-words.txt");
             const text = await response.text();
@@ -189,6 +207,25 @@
             await loadWords();
         }
         init();
+        async function reset(){
+            await init();
+            guessNum = 0;
+            status.textContent = "";
+            board.innerHTML = "";
+            const nRow = document.createElement("div");
+            nRow.className = "row";
+            for (let i = 0; i < 5; i++){
+                const input = document.createElement("input");
+                input.maxLength = 1;
+                setUpInput(input);
+                nRow.appendChild(input);
+            }
+            board.appendChild(nRow);
+            nRow.querySelector("input").focus();
+            document.querySelectorAll("#keyboard button").forEach(btn => {
+                btn.style.backgroundColor = "";
+            });
+        }
         const win = document.getElementById("win");
         win.querySelector(".close-btn").addEventListener("click", () => {
             win.close();
@@ -235,7 +272,8 @@
             if (e.target.tagName !== "BUTTON") return;
             const key = e.target.id;
             const activeInput = getActiveInput();
-            if (!activeInput.readOnly){
+            if (!activeInput && key !== "enter" && key !== "backspace") return;
+            if (!activeInput|| !activeInput.readOnly){
                 if (key === "enter") {
                     guesser();
                 } else if (key === "backspace") {

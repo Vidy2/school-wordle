@@ -90,7 +90,16 @@
             background: #fff;
             padding: 0.3rem 0.6rem;
             border-radius: 5px;
-            font-size: 0.8rem;
+            font-size: 1.6rem;
+        }
+        .corner-link-2 {
+            position: fixed;
+            bottom: 1rem;
+            right: 6.5rem;
+            background: #fff;
+            padding: 0.3rem 0.6rem;
+            border-radius: 5px;
+            font-size: 1.6rem;
         }
         .pulse {
             animation: pulse 0.2s ease;
@@ -167,11 +176,12 @@
             <button class="close-btn" aria-label="close">&times;</button>
             <p style="font-size: 1.5rem; font-weight: bold; color:green;">You won!</p>
         </dialog>
+        <button class="corner-link" onclick="location.href='inf.html'">Infinite</button>
     </section>
 
     <script>
         function cookieSetter(){
-            if (document.cookie.indexOf("vistorID=") === -1){
+            if (document.cookie.indexOf("visitorID=") === -1){
                 let now = new Date();
                 let uniqueID = Date.now();
                 let midnight = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59);
@@ -285,7 +295,8 @@
             if (e.target.tagName !== "BUTTON") return;
             const key = e.target.id;
             const activeInput = getActiveInput();
-            if (!activeInput.readOnly){
+            if (!activeInput && key !== "enter" && key !== "backspace") return;
+            if (!activeInput|| !activeInput.readOnly){
                 if (key === "enter") {
                     guesser();
                 } else if (key === "backspace") {
