@@ -831,7 +831,6 @@ fussy
 fuzzy
 gaffe
 gaily
-gamer
 gamma
 gamut
 gassy
