@@ -125,7 +125,7 @@
 <body>
 
     <section id="project">
-        <h1>Guess the Word</h1>
+        <h1>What's the Word</h1>
         <div id = "board">
             <div class = "row">
                 <input inputmode="none" maxlength="1">
@@ -210,12 +210,12 @@
             };
             let now = new Date();
             let midnight = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59);
-            document.cookie = "wordleState=" + JSON.stringify(state) + ";expires=" + midnight.toUTCString() + "; path=/";
+            document.cookie = "wordState=" + JSON.stringify(state) + ";expires=" + midnight.toUTCString() + "; path=/";
         }
         
         cookieSetter();
         function loadProgress() {
-            const name = "wordleState=";
+            const name = "wordState=";
             const decodedCookie = decodeURIComponent(document.cookie);
             const ca = decodedCookie.split(';');
             for(let i = 0; i < ca.length; i++) {
