@@ -1,4 +1,4 @@
-name: Daily Connections Fetch
+name: Daily Connect Fetch
 on:
   schedule:
     - cron: '0 0 * * *'
@@ -23,5 +23,5 @@ jobs:
           git config --global user.name 'github-actions'
           git config --global user.email 'github-actions@github.com'
           git add connect.json
-          git commit -m "Update Connections puzzle for $(date +'%Y-%m-%d')" || exit 0
+          git commit -m "Update Connect puzzle for $(date +'%Y-%m-%d')" || exit 0
           git push
