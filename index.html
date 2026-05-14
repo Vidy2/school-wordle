@@ -290,6 +290,7 @@
         const enter = document.getElementById("enter");
         const backspace = document.getElementById("backspace");
         let stop = false;
+        let dis = false;
         const keyButtons = {};
         "abcdefghijklmnopqrstuvwxyz".split("").forEach(letter => {
             keyButtons[letter] = document.getElementById(letter);
@@ -307,7 +308,7 @@
             if (!activeInput|| !activeInput.readOnly){
                 if (key === "enter") {
                     guesser();
-                } else if (key === "backspace") {
+                } else if (key === "backspace" && dis === false) {
                     const cuRow = board.lastElementChild;
                     const inputs = Array.from(cuRow.querySelectorAll("input"));
                     const lastFilled = inputs.reverse().find(input => input.value !== "");
@@ -348,6 +349,7 @@
         }
         document.querySelectorAll("input").forEach(setUpInput);
         async function guesser(){
+            dis = true;
             const used = [false, false, false, false, false];
             const rows = board.querySelectorAll(".row");
             const cuRow = rows[guessNum]
@@ -368,6 +370,7 @@
                 let temp = word.split("");
                 for (let i = 0; i < res.length; i++) {
                     const input = res[i];
+                    input.readOnly = true;
                     if (guess[i] === temp[i]) {
                         used[i] = true;
                     }
@@ -378,7 +381,6 @@
                     if (guess[i] === temp[i]) {
                         input.style.backgroundColor = "#57af54";
                         keyButtons[guess[i]].style.backgroundColor = "#57af54";
-                        input.readOnly = true;
                         input.classList.add("pulse");
                         setTimeout(() => {
                             input.classList.remove("pulse");
@@ -417,7 +419,6 @@
                         await new Promise(resolve => setTimeout(resolve, 250));
                     }
                     input.style.color = "white";
-                    input.readOnly = true;
                 };
                     guess = guess.toLowerCase();
                     if (guess === word){
@@ -427,6 +428,7 @@
                         win.showModal();
                         return;
                     }
+                    dis = false;
                     guessNum += 1;
                     saveProgress();
                     if (guessNum > 5){
