@@ -374,6 +374,7 @@
                     if (guess[i] === temp[i]) {
                         input.style.backgroundColor = "#57af54";
                         keyButtons[guess[i]].style.backgroundColor = "#57af54";
+                        keyButtons[guess[i]].style.color = "white";
                         input.readOnly = true;
                         input.classList.add("pulse");
                         setTimeout(() => {
@@ -388,6 +389,7 @@
                     else if (index !== -1 && !used[index]) {
                         input.style.backgroundColor = "#cccc4f";
                         keyButtons[guess[i]].style.backgroundColor = "#cccc4f";
+                        keyButtons[guess[i]].style.color = "white";
                         temp[index] = null;
                         used[index] = true;
                         input.classList.add("pulse");
@@ -402,6 +404,7 @@
                     } else {
                         input.style.backgroundColor = "#7e8281";
                         keyButtons[guess[i]].style.backgroundColor = "#7e8281";
+                        keyButtons[guess[i]].style.color = "white";
                         input.classList.add("pulse");
                         setTimeout(() => {
                             input.classList.remove("pulse");
