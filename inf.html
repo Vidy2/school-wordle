@@ -461,6 +461,7 @@
                     }
                     board.appendChild(nRow);
                     nRow.querySelector("input").focus();
+                    dis = false;
             } else {
                 status.textContent = "Enter a real word";
                 status.style.color = "red";
@@ -468,7 +469,6 @@
                     status.textContent = "";
                 }, 2000);
             }
-            dis = false;
         };
         document.addEventListener("keydown",(e) => {
             if (e.key === "Enter" && dis === false){
