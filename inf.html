@@ -114,7 +114,11 @@
             50% { transform: scale(1.08); }
             100% { transform: scale(1); }
         }
-        @media (max-width: 200px) {
+       @media (max-width: 600px) {
+            #keyboard button {
+                font-size: 0.7rem;
+                padding: 0.3rem 0.45rem;
+            }
             h2 {
                 font-size: 2rem;
             }
@@ -129,15 +133,6 @@
             }
             .corner-link-2 {
                 right: 10vw;
-            }
-            button {
-                display: block;
-                margin: 0 auto;
-                padding: 0.35rem 0.55rem;
-                text-align: center;
-                border-radius: 12px;
-                border: 3px solid #ccc;
-                font-size: clamp(0.7rem, 2vw, 1rem);
             }
         }
     </style>
