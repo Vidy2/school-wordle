@@ -370,13 +370,13 @@
                 let temp = word.split("");
                 for (let i = 0; i < res.length; i++) {
                     const input = res[i];
+                    input.readOnly = true;
                     if (guess[i] === temp[i]) {
                         used[i] = true;
                     }
                 };
                 for (let i = 0; i < res.length; i++) {
                     const input = res[i];
-                    input.readOnly = true;
                     const index = temp.indexOf(guess[i]);
                     if (guess[i] === temp[i]) {
                         input.style.backgroundColor = "#57af54";
