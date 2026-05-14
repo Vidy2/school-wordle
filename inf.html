@@ -231,6 +231,7 @@
             getActiveInput().focus();
         }
         init();
+        let wins = false;
         async function reset(){
             await loadWordl();
             guessNum = 0;
@@ -249,6 +250,7 @@
             document.querySelectorAll("#keyboard button").forEach(btn => {
                 btn.style.backgroundColor = "";
             });
+            let wins = false;
         }
         const win = document.getElementById("win");
         win.querySelector(".close-btn").addEventListener("click", () => {
@@ -298,12 +300,15 @@
         document.getElementById("keyboard").addEventListener("click", (e) => {
             if (e.target.tagName !== "BUTTON") return;
             const key = e.target.id;
+            if (keyButtons[key]) {
+                pulse(keyButtons[key]);
+            }
             const activeInput = getActiveInput();
             if (!activeInput && key !== "enter" && key !== "backspace") return;
             if (!activeInput|| !activeInput.readOnly){
                 if (key === "enter") {
                     guesser();
-                } else if (key === "backspace") {
+                } else if (key === "backspace" && wins === false) {
                     const cuRow = board.lastElementChild;
                     const inputs = Array.from(cuRow.querySelectorAll("input"));
                     const lastFilled = inputs.reverse().find(input => input.value !== "");
@@ -420,7 +425,11 @@
                 };
                     guess = guess.toLowerCase();
                     if (guess === word){
+                        for (key in keyButtons){
+                            keyButtons[key].style.color = "black";
+                        }
                         status.style.color = "green";
+                        wins = true;
                         status.textContent = "You won!";
                         win.showModal();
                         return;
