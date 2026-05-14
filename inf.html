@@ -205,6 +205,7 @@
 
     <script>
         let word = "";
+        let dis = false;
         let words = [];
         let guessNum = 0;
         function pulse(element) {
@@ -307,9 +308,9 @@
             const activeInput = getActiveInput();
             if (!activeInput && key !== "enter" && key !== "backspace") return;
             if (!activeInput|| !activeInput.readOnly){
-                if (key === "enter") {
+                if (key === "enter" && dis === false) {
                     guesser();
-                } else if (key === "backspace" && wins === false) {
+                } else if (key === "backspace" && wins === false && dis === false) {
                     const cuRow = board.lastElementChild;
                     const inputs = Array.from(cuRow.querySelectorAll("input"));
                     const lastFilled = inputs.reverse().find(input => input.value !== "");
@@ -350,6 +351,7 @@
         }
         document.querySelectorAll("input").forEach(setUpInput);
         async function guesser(){
+            dis = true;
             const used = [false, false, false, false, false];
             const rows = board.querySelectorAll(".row");
             const cuRow = rows[guessNum]
@@ -437,6 +439,7 @@
                         return;
                     }
                     guessNum += 1;
+                    dis = false;
                     if (guessNum > 5){
                         document.querySelectorAll("input").forEach(inp => {
                             inp.readOnly = true;
