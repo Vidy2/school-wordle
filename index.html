@@ -491,7 +491,7 @@
             dis = false;
         };
         document.addEventListener("keydown",(e) => {
-            if (e.key === "Enter"){
+            if (e.key === "Enter" && dis === false){
                 guesser();
             }
         });
