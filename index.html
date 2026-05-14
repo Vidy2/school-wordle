@@ -85,21 +85,21 @@
         }
         .corner-link {
             position: fixed;
-            bottom: 1rem;
-            right: 1rem;
+            bottom: 1vw;
+            right: 1vw;
             background: #fff;
             padding: 0.3rem 0.6rem;
             border-radius: 5px;
-            font-size: 1.6rem;
+            font-size: 1.5vw;
         }
         .corner-link-2 {
             position: fixed;
-            bottom: 1rem;
-            right: 6.5rem;
+            bottom: 1vw;
+            right: 2vw;
             background: #fff;
             padding: 0.3rem 0.6rem;
             border-radius: 5px;
-            font-size: 1.6rem;
+            font-size: 2vw;
         }
         .pulse {
             animation: pulse 0.2s ease;
@@ -114,9 +114,30 @@
             50% { transform: scale(1.08); }
             100% { transform: scale(1); }
         }
-        @media (max-width: 200px) {
+        @media (max-width: 600px) {
+            #keyboard button {
+                font-size: 0.7rem;
+                padding: 0.3rem 0.45rem;
+            }
             h2 {
                 font-size: 2rem;
+            }
+            .row1 {
+                font-size:0.2vw;
+            }
+            .row2 {
+                font-size:0.2vw;
+            }
+            .row3 {
+                font-size:0.2vw;
+            }
+            .corner-link-2 {
+                right: 12vw;
+            }
+            input {
+                width: 2.5rem;
+                height: 2.5rem;
+                font-size: 1.4rem;
             }
         }
     </style>
@@ -257,6 +278,7 @@
             }
         }
         init();
+        let wins = false;
         const win = document.getElementById("win");
         win.querySelector(".close-btn").addEventListener("click", () => {
             win.close();
@@ -303,12 +325,15 @@
         document.getElementById("keyboard").addEventListener("click", (e) => {
             if (e.target.tagName !== "BUTTON") return;
             const key = e.target.id;
+            if (keyButtons[key]) {
+                pulse(keyButtons[key]);
+            }
             const activeInput = getActiveInput();
             if (!activeInput && key !== "enter" && key !== "backspace") return;
             if (!activeInput|| !activeInput.readOnly){
                 if (key === "enter") {
                     guesser();
-                } else if (key === "backspace" && dis === false) {
+                } else if (key === "backspace" && dis === false && wins === false) {
                     const cuRow = board.lastElementChild;
                     const inputs = Array.from(cuRow.querySelectorAll("input"));
                     const lastFilled = inputs.reverse().find(input => input.value !== "");
@@ -381,6 +406,7 @@
                     if (guess[i] === temp[i]) {
                         input.style.backgroundColor = "#57af54";
                         keyButtons[guess[i]].style.backgroundColor = "#57af54";
+                        input.readOnly = true;
                         input.classList.add("pulse");
                         setTimeout(() => {
                             input.classList.remove("pulse");
@@ -394,6 +420,7 @@
                     else if (index !== -1 && !used[index]) {
                         input.style.backgroundColor = "#cccc4f";
                         keyButtons[guess[i]].style.backgroundColor = "#cccc4f";
+                        keyButtons[guess[i]].style.color = "white";
                         temp[index] = null;
                         used[index] = true;
                         input.classList.add("pulse");
@@ -408,6 +435,7 @@
                     } else {
                         input.style.backgroundColor = "#7e8281";
                         keyButtons[guess[i]].style.backgroundColor = "#7e8281";
+                        keyButtons[guess[i]].style.color = "white";
                         input.classList.add("pulse");
                         setTimeout(() => {
                             input.classList.remove("pulse");
@@ -422,6 +450,7 @@
                 };
                     guess = guess.toLowerCase();
                     if (guess === word){
+                        wins = true;
                         saveProgress();
                         status.style.color = "green";
                         status.textContent = "You won!";
@@ -444,6 +473,7 @@
                     for (let i = 0; i < 5; i++){
                         const input = document.createElement("input");
                         input.maxLength = 1;
+                        input.inputMode = "none";
                         setUpInput(input);
                         nRow.appendChild(input);
                     }
