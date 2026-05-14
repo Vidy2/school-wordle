@@ -331,7 +331,7 @@
             const activeInput = getActiveInput();
             if (!activeInput && key !== "enter" && key !== "backspace") return;
             if (!activeInput|| !activeInput.readOnly){
-                if (key === "enter") {
+                if (key === "enter" && dis === false) {
                     guesser();
                 } else if (key === "backspace" && dis === false && wins === false) {
                     const cuRow = board.lastElementChild;
@@ -457,7 +457,6 @@
                         win.showModal();
                         return;
                     }
-                    dis = false;
                     guessNum += 1;
                     saveProgress();
                     if (guessNum > 5){
@@ -489,6 +488,7 @@
                     status.textContent = "";
                 }, 2000);
             }
+            dis = false;
         };
         document.addEventListener("keydown",(e) => {
             if (e.key === "Enter"){
