@@ -439,7 +439,6 @@
                         return;
                     }
                     guessNum += 1;
-                    dis = false;
                     if (guessNum > 5){
                         document.querySelectorAll("input").forEach(inp => {
                             inp.readOnly = true;
@@ -469,6 +468,7 @@
                     status.textContent = "";
                 }, 2000);
             }
+            dis = false;
         };
         document.addEventListener("keydown",(e) => {
             if (e.key === "Enter"){
