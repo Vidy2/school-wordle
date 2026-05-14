@@ -386,6 +386,7 @@
             if (guess.length !== 5) {
                 status.textContent = "Enter 5 letters";
                 status.style.color = "red";
+                dis = false;
                 setTimeout(() => {
                     status.textContent = "";
                 }, 2000);
@@ -485,6 +486,7 @@
             } else {
                 status.textContent = "Enter a real word";
                 status.style.color = "red";
+                dis = false;
                 setTimeout(() => {
                     status.textContent = "";
                 }, 2000);
