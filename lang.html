@@ -272,6 +272,7 @@
                 btn.style.color = "black";
             });
             wins = false;
+            dis = false;
         }
         const win = document.getElementById("win");
         win.querySelector(".close-btn").addEventListener("click", () => {
@@ -446,7 +447,6 @@
                 guess = guess.toLowerCase();
                 if (guess === word){
                     wins = true;
-                    saveProgress();
                     status.style.color = "green";
                     status.textContent = "You won!";
                     win.showModal();

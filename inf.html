@@ -95,7 +95,7 @@
         .corner-link-2 {
             position: fixed;
             bottom: 1vw;
-            right: 8vw;
+            right: 6.5vw;
             background: #fff;
             padding: 0.3rem 0.6rem;
             border-radius: 5px;
@@ -104,7 +104,7 @@
         .corner-link-3 {
             position: fixed;
             bottom: 1vw;
-            right: 15vw;
+            right: 15.75vw;
             background: #fff;
             padding: 0.3rem 0.6rem;
             border-radius: 5px;
@@ -206,13 +206,12 @@
         <button class="corner-link" onclick="location.href='index.html';pulse(this)">Daily</button>
         <button class="corner-link-2" onclick="reset(); pulse(this)">New Word</button>
         <button class="corner-link-3" onclick="location.href='lang.html';pulse(this)">Spanish Unlimited</button>
+    </section>
         <dialog id="win">
             <button class="close-btn" aria-label="close">&times;</button>
             <p style="font-size: 1.5rem; font-weight: bold; color:green;">You won!</p>
             <button id="reste" onclick="reset(); pulse(this)">New Word</button>
         </dialog>
-    </section>
-
     <script>
         let word = "";
         let dis = false;
