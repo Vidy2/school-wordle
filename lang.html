@@ -234,9 +234,10 @@
             element.classList.add("pulse");
         }
         let word = "";
+        let dis = false;
         let words = [];
         let guessNum = 0;
-       async function loadWordl(){
+        async function loadWordl(){
             const response = await fetch("./spanish5.txt");
             const text = await response.text();
 
@@ -250,40 +251,28 @@
             await loadWordl();
         }
         init();
+        let wins = false;
         async function reset(){
             await loadWordl();
             guessNum = 0;
-            wins = false;
             status.textContent = "";
             board.innerHTML = "";
-
             const nRow = document.createElement("div");
             nRow.className = "row";
-
             for (let i = 0; i < 5; i++){
                 const input = document.createElement("input");
                 input.maxLength = 1;
-                input.addEventListener('input', function() {
-                    this.value = this.value.replace(/[^a-zA-ZñÑ]/g, '');
-                });
-                input.inputMode = "none";
                 setUpInput(input);
                 nRow.appendChild(input);
             }
-
             board.appendChild(nRow);
             nRow.querySelector("input").focus();
-
             document.querySelectorAll("#keyboard button").forEach(btn => {
                 btn.style.backgroundColor = "";
                 btn.style.color = "black";
             });
-
-            if (win.open) {
-                win.close();
-            }
+            wins = false;
         }
-        let wins = false;
         const win = document.getElementById("win");
         win.querySelector(".close-btn").addEventListener("click", () => {
             win.close();
@@ -318,7 +307,6 @@
         const enter = document.getElementById("enter");
         const backspace = document.getElementById("backspace");
         let stop = false;
-        let dis = false;
         const keyButtons = {};
         "abcdefghijklmnñopqrstuvwxyz".split("").forEach(letter => {
             keyButtons[letter] = document.getElementById(letter);
@@ -455,40 +443,37 @@
                     }
                     input.style.color = "white";
                 };
-                    guess = guess.toLowerCase();
-                    if (guess === word){
-                        wins = true;
-                        saveProgress();
-                        status.style.color = "green";
-                        status.textContent = "You won!";
-                        win.showModal();
-                        return;
-                    }
-                    guessNum += 1;
+                guess = guess.toLowerCase();
+                if (guess === word){
+                    wins = true;
                     saveProgress();
-                    if (guessNum > 5){
-                        document.querySelectorAll("input").forEach(inp => {
-                            inp.readOnly = true;
-                        });
-                        status.textContent = `You lose, it was: ${word.toUpperCase()}`;
-                        status.style.color = "red";
-                        return;
-                    }
-                    const nRow = document.createElement("div");
-                    nRow.className = "row";
-                    for (let i = 0; i < 5; i++){
-                        const input = document.createElement("input");
-                        input.maxLength = 1;
-                        input.addEventListener('input', function() {
+                    status.style.color = "green";
+                    status.textContent = "You won!";
+                    win.showModal();
+                    return;
+                }
+                guessNum += 1;
+                if (guessNum > 5) {
+                    document.querySelectorAll("input").forEach(inp => inp.readOnly = true);
+                    status.textContent = `You lose, it was: ${word.toUpperCase()}`;
+                    status.style.color = "red";
+                    return;
+                }
+                const nRow = document.createElement("div");
+                nRow.className = "row";
+                for (let i = 0; i < 5; i++) {
+                    const input = document.createElement("input");
+                    input.maxLength = 1;
+                    input.addEventListener('input', function() {
                         this.value = this.value.replace(/[^a-zA-ZñÑ]/g, '');
-                        });
-                        input.inputMode = "none";
-                        setUpInput(input);
-                        nRow.appendChild(input);
-                    }
-                    board.appendChild(nRow);
-                    nRow.querySelector("input").focus();
-                    dis = false;
+                    });
+                    input.inputMode = "none";
+                    setUpInput(input);
+                    nRow.appendChild(input);
+                }
+                board.appendChild(nRow);
+                nRow.querySelector("input").focus();
+                dis = false;
             } else {
                 status.textContent = "Enter a real word";
                 status.style.color = "red";
